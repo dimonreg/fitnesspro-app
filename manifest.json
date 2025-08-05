@@ -1,11 +1,13 @@
 {
   "name": "FitnessPro",
-  "short_name": "FitnessPro",
+  "short_name": "FitnessPro", 
   "description": "Профессиональное фитнес приложение",
-  "start_url": "/",
+  "start_url": "/fitnesspro-app/",
+  "scope": "/fitnesspro-app/",
   "display": "standalone",
   "background_color": "#1a202c",
   "theme_color": "#1a202c",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>",

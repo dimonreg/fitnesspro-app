@@ -3889,6 +3889,18 @@
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', initApp);
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/fitnesspro-app/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    }).catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
