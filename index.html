@@ -672,6 +672,7 @@
             z-index: 1000;
             overflow-y: auto;
             backdrop-filter: var(--backdrop-blur);
+            padding-top: env(safe-area-inset-top, 0);
         }
 
         .modal.active {
@@ -695,12 +696,13 @@
             top: 0;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: var(--backdrop-blur);
-            padding: 20px;
+            padding: 20px 20px 20px 20px;
             border-bottom: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-shadow: var(--shadow-soft);
+            margin-top: env(safe-area-inset-top, 0);
         }
 
         .modal-title {
@@ -719,10 +721,15 @@
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 12px;
             backdrop-filter: var(--backdrop-blur);
             transition: all 0.3s ease;
+            min-width: 80px;
+            min-height: 44px; /* Apple рекомендованный минимальный размер для касания */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close-btn:hover {
@@ -806,6 +813,49 @@
 
         .timer-section.active .timer-time {
             animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Дополнительные стили для iPhone с большими экранами */
+        @media screen and (min-height: 844px) {
+            /* iPhone 14, 14 Pro и подобные */
+            .modal {
+                padding-top: max(env(safe-area-inset-top, 0), 40px);
+            }
+            
+            .modal-header {
+                margin-top: 0;
+                padding-top: 20px;
+            }
+        }
+
+        @media screen and (min-height: 926px) {
+            /* iPhone 14 Pro Max и подобные */
+            .modal {
+                padding-top: max(env(safe-area-inset-top, 0), 50px);
+            }
+            
+            .modal-header {
+                margin-top: 0;
+                padding-top: 24px;
+            }
+            
+            .close-btn {
+                padding: 14px 20px;
+                min-height: 48px;
+                font-size: 17px;
+                margin-top: 6px;
+            }
+        }
+
+        /* Дополнительная безопасность для всех модальных окон */
+        .modal {
+            padding-top: env(safe-area-inset-top, 0);
+        }
+        
+        /* Убедимся, что кнопки имеют достаточную область касания */
+        button {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
     </style>
 </head>
