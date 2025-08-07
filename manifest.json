@@ -1,0 +1,63 @@
+{
+    "name": "FitnessPro Ultimate - Professional Training",
+    "short_name": "FitnessPro",
+    "description": "Профессиональное приложение для тренировок с 7-дневной программой и GIF упражнений",
+    "start_url": "/fitnesspro-app/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "orientation": "portrait",
+    "scope": "/fitnesspro-app/",
+    "categories": ["health", "fitness", "lifestyle", "sports"],
+    "lang": "ru",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230f172a'/><text x='96' y='140' font-size='120' text-anchor='middle' fill='%233b82f6'>💪</text></svg>",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230f172a'/><text x='256' y='350' font-size='280' text-anchor='middle' fill='%233b82f6'>💪</text></svg>",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 430 932'><rect width='430' height='932' fill='%230f172a'/><text x='215' y='466' font-size='120' text-anchor='middle' fill='%233b82f6'>FitnessPro</text></svg>",
+            "sizes": "430x932",
+            "type": "image/svg+xml",
+            "form_factor": "narrow"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Сегодняшняя тренировка",
+            "short_name": "Тренировка",
+            "description": "Начать сегодняшнюю тренировку",
+            "url": "/fitnesspro-app/",
+            "icons": [
+                {
+                    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='80'>🏋️</text></svg>",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Статистика",
+            "short_name": "Статистика",
+            "description": "Посмотреть статистику тренировок",
+            "url": "/fitnesspro-app/?page=stats",
+            "icons": [
+                {
+                    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='80'>📊</text></svg>",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}
