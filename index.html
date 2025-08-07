@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>FitnessPro - Professional Training</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FitnessPro">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="FitnessPro">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest-pro.json">
+    
+    <!-- Favicons -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+    
+    <style>
+        :root {
+            /* Dark Professional Theme */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-elevated: #334155;
+            --bg-glass: rgba(30, 41, 59, 0.6);
+            
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            
+            /* Accent Colors */
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            
+            /* Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-top: env(safe-area-inset-top, 0);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+            overflow-x: hidden;
+        }
+
+        .app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0);
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--bg-elevated);
+            padding: var(--space-md) var(--space-lg);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-stats {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-sm);
+        }
+
+        .stat {
+            background: var(--bg-glass);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: var(--space-lg);
+        }
+
+        /* Workout Plan Card */
+        .workout-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .workout-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+        }
+
+        .workout-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .workout-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .workout-progress {
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-primary) 0deg, var(--bg-primary) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-circle::before {
+            content: '';
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            position: absolute;
+        }
+
+        .progress-text {
+            font-weight: 700;
+            z-index: 1;
+            position: relative;
+        }
+
+        .progress-info h4 {
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .progress-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Exercise List */
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .exercise-item {
+            background: var(--bg-glass);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .exercise-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .exercise-item.active {
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .exercise-item.completed {
+            border-color: var(--accent-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+        }
+
+        .exercise-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .exercise-status {
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exercise-status.pending {
+            background: rgba(148, 163, 184, 0.2);
+            color: var(--text-muted);
+        }
+
+        .exercise-status.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-primary);
+        }
+
+        .exercise-status.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-success);
+        }
+
+        .exercise-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .exercise-detail {
+            text-align: center;
+        }
+
+        .exercise-detail-value {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: var(--space-xs);
+        }
+
+        .exercise-detail-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Timer Section */
+        .timer-section {
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            margin-top: var(--space-md);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .timer-section.active {
+            border-color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: var(--space-md);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        /* Action Buttons */
+        .exercise-actions {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .complete-set-btn {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .skip-btn {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Quick Log Section */
+        .quick-log {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            position: fixed;
+            bottom: calc(80px + env(safe-area-inset-bottom, 0));
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 398px;
+            z-index: 50;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        .quick-log.hidden {
+            transform: translateX(-50%) translateY(100%);
+            opacity: 0;
+        }
+
+        .quick-log-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+        }
+
+        .log-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .input-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 0);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 398px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: var(--space-md);
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (min-height: 844px) {
+            .quick-log {
+                bottom: calc(100px + env(safe-area-inset-bottom, 0));
+            }
+        }
+
+        @media (min-height: 926px) {
+            .header {
+                padding-top: calc(var(--space-md) + 8px);
+            }
+            
+            .quick-log {
+                bottom: calc(110px + env(safe-area-inset-bottom, 0));
+            }
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .animate-glow {
+            animation: glow 2s infinite;
+        }
+
+        /* Modal Updates */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background: var(--bg-primary);
+            z-index: 1000;
+            overflow-y: auto;
+            padding-top: env(safe-area-inset-top, 0);
+        }
+
+        .modal.active {
+            display: block;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: env(safe-area-inset-top, 0);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-btn {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+            min-width: 80px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .modal-content {
+            padding: var(--space-lg);
+            padding-bottom: 100px;
+        }
+
+        /* Additional styles for edit mode */
+        .edit-exercise-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .plan-item {
+            background: var(--bg-secondary);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .achievement {
+            background: var(--bg-secondary);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+            background: var(--bg-elevated);
+        }
+
+        .achievement-icon {
+            font-size: 32px;
+        }
+
+        .achievement-title {
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .achievement-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-lg) 0;
+            border-bottom: 1px solid var(--bg-elevated);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Notification animation */
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div>
+                    <h1 class="app-title">FitnessPro</h1>
+                    <div class="user-stats">
+                        <div class="stat">
+                            <div class="stat-value">75кг</div>
+                            <div class="stat-label">Вес</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">170см</div>
+                            <div class="stat-label">Рост</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="currentStreak">0</div>
+                            <div class="stat-label">Дни</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main" id="mainContent">
+            <!-- Today's Workout Card -->
+            <div class="workout-card">
+                <div class="workout-header">
+                    <div>
+                        <h2 class="workout-title" id="workoutTitle">Грудь + Трицепс</h2>
+                        <p class="workout-subtitle" id="workoutSubtitle">Среда, 7 августа • 10:00-12:00</p>
+                    </div>
+                </div>
+                
+                <div class="workout-progress">
+                    <div class="progress-circle" id="progressCircle">
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+                    <div class="progress-info">
+                        <h4 id="progressTitle">Готов к тренировке</h4>
+                        <p id="progressDetails">7 упражнений • ~90 минут</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise List -->
+            <div class="exercise-list" id="exerciseList">
+                <!-- Exercises will be populated by JavaScript -->
+            </div>
+        </main>
+
+        <!-- Quick Log (Hidden by default) -->
+        <div class="quick-log hidden" id="quickLog">
+            <div class="quick-log-header">
+                <h3>Записать подход</h3>
+                <button class="btn-icon btn-secondary" onclick="hideQuickLog()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="log-inputs">
+                <div class="input-group">
+                    <label class="input-label">Вес (кг)</label>
+                    <input type="number" class="input" id="logWeight" placeholder="80">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Повторения</label>
+                    <input type="number" class="input" id="logReps" placeholder="8">
+                </div>
+            </div>
+            
+            <div class="exercise-actions">
+                <button class="action-btn complete-set-btn" onclick="completeSet()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"></polyline>
+                    </svg>
+                    Завершить подход
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-items">
+                <a href="#" class="nav-item active" onclick="switchTab('workout')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.5 5.5L22 10l-4.5 4.5M2 10h20M7 3L2 8l5 5"/>
+                    </svg>
+                    <span class="nav-label">Тренировка</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openModal('statistics')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21H4.6c-.56 0-.6-.4-.6-1V3"/>
+                        <path d="M9 12v9M15 6v15M20 9v12"/>
+                    </svg>
+                    <span class="nav-label">Статистика</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openModal('achievements')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                        <path d="M4 22h16"/>
+                        <path d="M10 14.66V17c0 .55.47.98.97 1.21C12.04 18.75 13 19.5 14 19.5s1.96-.75 3.03-1.29c.5-.23.97-.66.97-1.21v-2.34"/>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                    </svg>
+                    <span class="nav-label">Достижения</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openModal('settings')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    <span class="nav-label">Настройки</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Модальное окно</h3>
+            <button class="close-btn" onclick="closeModal()">Закрыть</button>
+        </div>
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script src="js/app-pro.js"></script>
+</body>
+</html>

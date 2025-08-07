@@ -1,0 +1,39 @@
+{
+  "name": "FitnessPro - Professional Training",
+  "short_name": "FitnessPro", 
+  "description": "Профессиональное фитнес приложение с расширенной базой тренировок",
+  "start_url": "/fitnesspro-app/",
+  "scope": "/fitnesspro-app/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>",
+      "sizes": "512x512", 
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["health", "fitness", "lifestyle"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Начать тренировку",
+      "short_name": "Тренировка",
+      "description": "Быстро начать сегодняшнюю тренировку",
+      "url": "/fitnesspro-app/#workout",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
