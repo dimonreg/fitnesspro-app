@@ -1,8 +1,8 @@
-const CACHE_NAME = 'fitnesspro-ultimate-v1.0.0';
+const CACHE_NAME = 'fitnesspro-professional-v1.2.0';
 const urlsToCache = [
-    '/fitnesspro-app/',
-    '/fitnesspro-app/index-ultimate.html',
-    '/fitnesspro-app/manifest-ultimate.json'
+    '/',
+    '/index.html',
+    '/manifest.json'
 ];
 
 // Install Service Worker
@@ -74,7 +74,7 @@ self.addEventListener('fetch', function(event) {
                 console.log('FitnessPro SW: Fetch failed', error);
                 // Return offline page or default response
                 if (event.request.destination === 'document') {
-                    return caches.match('/fitnesspro-app/');
+                    return caches.match('/');
                 }
             })
     );
@@ -94,22 +94,20 @@ self.addEventListener('push', function(event) {
     
     const options = {
         body: event.data ? event.data.text() : 'Время для тренировки! 💪',
-        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" fill="#0f172a"/><text x="96" y="140" font-size="120" text-anchor="middle" fill="#3b82f6">💪</text></svg>',
-        badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><text y=".9em" font-size="80">💪</text></svg>',
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%233B82F6"/><stop offset="100%" style="stop-color:%231D4ED8"/></linearGradient></defs><circle cx="96" cy="96" r="88" fill="url(%23grad)"/><g fill="white"><circle cx="60" cy="76" r="8"/><circle cx="132" cy="76" r="8"/><rect x="70" y="60" width="52" height="12" rx="6"/><rect x="50" y="90" width="92" height="16" rx="8"/><rect x="60" y="110" width="72" height="12" rx="6"/><rect x="70" y="125" width="52" height="8" rx="4"/></g></svg>',
+        badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><circle cx="48" cy="48" r="44" fill="%233B82F6"/><text x="48" y="65" font-size="40" text-anchor="middle" fill="white">💪</text></svg>',
         vibrate: [200, 100, 200],
         data: {
-            url: '/fitnesspro-app/'
+            url: '/'
         },
         actions: [
             {
                 action: 'start-workout',
-                title: 'Начать тренировку',
-                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><text y=".9em" font-size="80">🏋️</text></svg>'
+                title: 'Начать тренировку'
             },
             {
                 action: 'view-stats',
-                title: 'Статистика',
-                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><text y=".9em" font-size="80">📊</text></svg>'
+                title: 'Статистика'
             }
         ]
     };
@@ -125,12 +123,12 @@ self.addEventListener('notificationclick', function(event) {
     
     event.notification.close();
     
-    let urlToOpen = '/fitnesspro-app/';
+    let urlToOpen = '/';
     
     if (event.action === 'start-workout') {
-        urlToOpen = '/fitnesspro-app/';
+        urlToOpen = '/';
     } else if (event.action === 'view-stats') {
-        urlToOpen = '/fitnesspro-app/?page=stats';
+        urlToOpen = '/?page=stats';
     }
     
     event.waitUntil(
@@ -141,7 +139,7 @@ self.addEventListener('notificationclick', function(event) {
             // If app is already open, focus it
             for (let i = 0; i < clientList.length; i++) {
                 const client = clientList[i];
-                if (client.url.includes('/fitnesspro-app/') && 'focus' in client) {
+                if (client.url.includes('/') && 'focus' in client) {
                     return client.focus();
                 }
             }
@@ -157,10 +155,8 @@ self.addEventListener('notificationclick', function(event) {
 // Sync workout data function
 async function syncWorkoutData() {
     try {
-        // This would typically sync with a backend server
         console.log('FitnessPro SW: Syncing workout data...');
         
-        // For now, just log that sync was attempted
         const clients = await self.clients.matchAll();
         clients.forEach(client => {
             client.postMessage({
@@ -197,12 +193,12 @@ async function checkWorkoutReminder() {
             // App is not open, send push notification
             self.registration.showNotification('FitnessPro - Время тренировки! 💪', {
                 body: 'Не забудьте о сегодняшней тренировке. Ваши мышцы ждут!',
-                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" fill="#0f172a"/><text x="96" y="140" font-size="120" text-anchor="middle" fill="#3b82f6">💪</text></svg>',
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%233B82F6"/><stop offset="100%" style="stop-color:%231D4ED8"/></linearGradient></defs><circle cx="96" cy="96" r="88" fill="url(%23grad)"/><g fill="white"><circle cx="60" cy="76" r="8"/><circle cx="132" cy="76" r="8"/><rect x="70" y="60" width="52" height="12" rx="6"/><rect x="50" y="90" width="92" height="16" rx="8"/><rect x="60" y="110" width="72" height="12" rx="6"/><rect x="70" y="125" width="52" height="8" rx="4"/></g></svg>',
                 vibrate: [200, 100, 200],
-                data: { url: '/fitnesspro-app/' }
+                data: { url: '/' }
             });
         }
     }
 }
 
-console.log('FitnessPro SW: Service Worker loaded');
+console.log('FitnessPro SW: Professional Service Worker loaded');
