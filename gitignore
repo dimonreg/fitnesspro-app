@@ -1,0 +1,16 @@
+# Служебные файлы
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Временные файлы
+*.tmp
+*.temp
+
+# IDE файлы
+.vscode/settings.json
+.idea/
+
+# Локальные настройки
+config.local.js

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Программа Тренировок</title>
+    <meta name="description" content="Профессиональные программы тренировок по 90 минут для эффективного развития всех мышечных групп">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Тренировки">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>💪 Программа Тренировок</h1>
+            <p class="subtitle">Профессиональные тренировки по 90 минут</p>
+            <div class="header-controls">
+                <button class="header-btn" id="statsBtn">📊 Статистика</button>
+                <button class="header-btn" id="settingsBtn">⚙️ Настройки</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="program-selector">
+                <h2>Выберите день тренировки</h2>
+                <div class="days-grid">
+                    <div class="day-card" data-day="1">
+                        <div class="day-number">1</div>
+                        <h3>Грудь + Трицепс</h3>
+                        <p>Жимы, отжимания, трицепс</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                    
+                    <div class="day-card" data-day="2">
+                        <div class="day-number">2</div>
+                        <h3>Спина + Бицепс</h3>
+                        <p>Подтягивания, тяги, бицепс</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                    
+                    <div class="day-card" data-day="3">
+                        <div class="day-number">3</div>
+                        <h3>Ноги + Ягодицы</h3>
+                        <p>Приседания, выпады, икры</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                    
+                    <div class="day-card" data-day="4">
+                        <div class="day-number">4</div>
+                        <h3>Плечи + Пресс</h3>
+                        <p>Жимы, махи, кор</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                    
+                    <div class="day-card" data-day="5">
+                        <div class="day-number">5</div>
+                        <h3>Верх Тела</h3>
+                        <p>Комплексная тренировка</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                    
+                    <div class="day-card" data-day="6">
+                        <div class="day-number">6</div>
+                        <h3>Функциональная</h3>
+                        <p>Кор, стабилизация, кардио</p>
+                        <div class="duration">⏱️ 90 мин</div>
+                    </div>
+                </div>
+                
+                <div class="rest-day">
+                    <div class="rest-card">
+                        <div class="day-number">7</div>
+                        <h3>День Отдыха</h3>
+                        <p>Восстановление и растяжка</p>
+                        <div class="duration">🧘‍♂️ Отдых</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Модальное окно тренировки -->
+        <div class="workout-modal" id="workoutModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close-btn" id="closeBtn">&times;</button>
+                    <h2 id="workoutTitle">День 1: Грудь + Трицепс</h2>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0/12 упражнений</span>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="exercise-card" id="exerciseCard">
+                        <div class="exercise-phase" id="exercisePhase">Разминка</div>
+                        <h3 class="exercise-name" id="exerciseName">Динамическая разминка</h3>
+                        <div class="exercise-details">
+                            <div class="sets-reps" id="setsReps">5 минут</div>
+                                                    <div class="exercise-description" id="exerciseDescription">
+                            Подготовьте тело к тренировке
+                        </div>
+                        
+                        <!-- Прогресс упражнения -->
+                        <div class="exercise-progress" id="exerciseProgress" style="display: none;">
+                            <div class="progress-info">
+                                <span class="progress-label">Текущий вес:</span>
+                                <span class="current-weight" id="currentWeight">0 кг</span>
+                            </div>
+                            <div class="progress-history">
+                                <span class="history-label">Последние результаты:</span>
+                                <div class="history-dots" id="historyDots"></div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <div class="timer-container">
+                            <div class="timer" id="timer">00:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-secondary" id="startPauseBtn">Старт</button>
+                                <button class="btn btn-secondary" id="skipBtn">Пропустить</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-controls">
+                        <button class="btn btn-outline" id="prevBtn" disabled>← Назад</button>
+                        <button class="btn btn-primary" id="nextBtn">Далее →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно статистики -->
+        <div class="modal" id="statsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close-btn" id="closeStatsBtn">&times;</button>
+                    <h2>📊 Статистика тренировок</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalWorkouts">0</div>
+                            <div class="stat-label">Всего тренировок</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTime">0</div>
+                            <div class="stat-label">Минут тренировок</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="currentStreak">0</div>
+                            <div class="stat-label">Дней подряд</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="favoriteDay">-</div>
+                            <div class="stat-label">Любимый день</div>
+                        </div>
+                    </div>
+                    
+                    <div class="weekly-progress">
+                        <h3>Прогресс недели</h3>
+                        <div class="week-days">
+                            <div class="week-day" data-day="1"><span>Пн</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="2"><span>Вт</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="3"><span>Ср</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="4"><span>Чт</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="5"><span>Пт</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="6"><span>Сб</span><div class="day-indicator"></div></div>
+                            <div class="week-day" data-day="7"><span>Вс</span><div class="day-indicator"></div></div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline" id="clearStatsBtn">Сбросить статистику</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно настроек -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close-btn" id="closeSettingsBtn">&times;</button>
+                    <h2>⚙️ Настройки</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h3>🔊 Звуковые уведомления</h3>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="soundEnabled" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Звук завершения упражнения</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>🏋️‍♂️ Прогрессия нагрузки</h3>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="autoProgression" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Автоматическое увеличение весов</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label>Скорость прогрессии:</label>
+                            <input type="range" id="progressionRate" min="0.5" max="2.0" value="1.0" step="0.1">
+                            <span id="progressionRateValue">1.0x</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <button class="btn btn-outline" id="resetProgressBtn">Сбросить прогресс весов</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>⏰ Таймеры</h3>
+                        <div class="setting-item">
+                            <label>Время отдыха (секунды):</label>
+                            <input type="range" id="restTime" min="30" max="300" value="90" step="15">
+                            <span id="restTimeValue">90</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="autoStart" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Автоматический запуск таймера</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>🎨 Интерфейс</h3>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="vibrationEnabled" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Вибрация (мобильные)</span>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="keepScreenOn">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Не выключать экран</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>📱 Приложение</h3>
+                        <button class="btn btn-primary" id="installBtn" style="display: none;">
+                            📲 Установить приложение
+                        </button>
+                        <div class="app-version">
+                            Версия: 1.0.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('SW зарегистрирован: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW не зарегистрирован: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
