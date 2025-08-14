@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💪 Персональные Тренировки</title>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Современный заголовок -->
+        <header class="modern-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">💪</div>
+                    <div class="header-text">
+                        <h1>Тренировки</h1>
+                        <p>Персональная программа</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn stats-btn" onclick="showStatistics()">
+                        <span class="btn-icon">📊</span>
+                        <span class="btn-text">Статистика</span>
+                    </button>
+                    <button class="action-btn settings-btn" onclick="showSettings()">
+                        <span class="btn-icon">⚙️</span>
+                        <span class="btn-text">Настройки</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Главная сетка тренировок -->
+        <main class="main-container">
+            <div class="workout-grid">
+                <!-- День 1 -->
+                <div class="workout-card day-1" onclick="startWorkout(1)">
+                    <div class="card-header">
+                        <div class="day-badge">День 1</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Грудь & Трицепс</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Грудные</span>
+                            <span class="muscle-tag">Трицепс</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="1"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+
+                <!-- День 2 -->
+                <div class="workout-card day-2" onclick="startWorkout(2)">
+                    <div class="card-header">
+                        <div class="day-badge">День 2</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Спина & Бицепс</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Спина</span>
+                            <span class="muscle-tag">Бицепс</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="2"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+
+                <!-- День 3 -->
+                <div class="workout-card day-3" onclick="startWorkout(3)">
+                    <div class="card-header">
+                        <div class="day-badge">День 3</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Ноги & Ягодицы</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Квадрицепс</span>
+                            <span class="muscle-tag">Ягодицы</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="3"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+
+                <!-- День 4 -->
+                <div class="workout-card day-4" onclick="startWorkout(4)">
+                    <div class="card-header">
+                        <div class="day-badge">День 4</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Плечи & Трапеции</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Дельты</span>
+                            <span class="muscle-tag">Трапеции</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="4"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+
+                <!-- День 5 -->
+                <div class="workout-card day-5" onclick="startWorkout(5)">
+                    <div class="card-header">
+                        <div class="day-badge">День 5</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Силовая</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Комплекс</span>
+                            <span class="muscle-tag">Сила</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="5"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+
+                <!-- День 6 -->
+                <div class="workout-card day-6" onclick="startWorkout(6)">
+                    <div class="card-header">
+                        <div class="day-badge">День 6</div>
+                        <div class="duration-badge">90 мин</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Функциональная</h3>
+                        <p>+ Пресс</p>
+                        <div class="muscles-preview">
+                            <span class="muscle-tag">Кардио</span>
+                            <span class="muscle-tag">Выносливость</span>
+                            <span class="muscle-tag">Пресс</span>
+                        </div>
+                    </div>
+                    <div class="card-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" data-day="6"></div>
+                        </div>
+                        <span class="progress-text">0 из 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Быстрая статистика -->
+            <div class="quick-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="weeklyWorkouts">0</span>
+                        <span class="stat-label">тренировок на неделе</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalMinutes">0</span>
+                        <span class="stat-label">минут всего</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">💪</div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="currentStreak">0</span>
+                        <span class="stat-label">дней подряд</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Модальное окно тренировки (улучшенное) -->
+        <div id="workoutModal" class="modal workout-modal">
+            <div class="modal-backdrop" onclick="closeWorkout()"></div>
+            <div class="modal-content workout-content">
+                <div class="workout-header">
+                    <div class="workout-title-section">
+                        <h2 id="workoutTitle"></h2>
+                        <p id="workoutSubtitle"></p>
+                    </div>
+                    <button class="close-btn modern-close" onclick="closeWorkout()">
+                        <span>✕</span>
+                    </button>
+                </div>
+                
+                <div class="exercise-section">
+                    <div class="exercise-header">
+                        <div class="exercise-number-badge">
+                            <span id="exerciseCounter"></span>
+                        </div>
+                        <div class="exercise-phase-badge" id="exercisePhase"></div>
+                    </div>
+
+                    <div class="exercise-main">
+                        <h3 id="exerciseName"></h3>
+                        <p id="exerciseDescription"></p>
+                        
+                        <div class="exercise-stats">
+                            <div class="stat-box">
+                                <span class="stat-label">Подходы</span>
+                                <span class="stat-value" id="exerciseSets"></span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Повторения</span>
+                                <span class="stat-value" id="exerciseReps"></span>
+                            </div>
+                            <div class="stat-box" id="exerciseWeightContainer">
+                                <span class="stat-label">Вес</span>
+                                <span class="stat-value" id="exerciseWeight"></span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Отдых</span>
+                                <span class="stat-value" id="exerciseDuration"></span>
+                            </div>
+                        </div>
+
+                        <div class="exercise-tips" id="exerciseTipsContainer">
+                            <h4>💡 Техника выполнения</h4>
+                            <p id="exerciseTips"></p>
+                        </div>
+
+                        <div class="muscle-groups" id="exerciseMuscles"></div>
+                    </div>
+
+                    <div class="timer-container">
+                        <div class="timer-circle">
+                            <svg class="timer-svg" viewBox="0 0 100 100">
+                                <circle class="timer-track" cx="50" cy="50" r="45"></circle>
+                                <circle class="timer-progress" cx="50" cy="50" r="45" id="timerProgress"></circle>
+                            </svg>
+                            <div class="timer-text">
+                                <span class="timer-time" id="timerDisplay">00:00</span>
+                                <span class="timer-label">отдых</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-controls">
+                            <button class="timer-btn start-btn" id="startPauseBtn" onclick="toggleTimer()">
+                                <span class="btn-icon">▶️</span>
+                                <span>Старт</span>
+                            </button>
+                            <button class="timer-btn reset-btn" onclick="resetTimer()">
+                                <span class="btn-icon">🔄</span>
+                                <span>Сброс</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="workout-navigation">
+                        <button class="nav-btn prev-btn" id="prevExerciseBtn" onclick="previousExercise()">
+                            <span class="btn-icon">⬅️</span>
+                            <span>Назад</span>
+                        </button>
+                        <button class="nav-btn complete-btn" onclick="completeExercise()">
+                            <span class="btn-icon">✅</span>
+                            <span>Выполнено</span>
+                        </button>
+                        <button class="nav-btn next-btn" id="nextExerciseBtn" onclick="nextExercise()">
+                            <span>Далее</span>
+                            <span class="btn-icon">➡️</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Остальные модальные окна -->
+        <div id="statisticsModal" class="modal">
+            <div class="modal-backdrop" onclick="closeModal('statisticsModal')"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📊 Статистика тренировок</h2>
+                    <button class="close-btn modern-close" onclick="closeModal('statisticsModal')">
+                        <span>✕</span>
+                    </button>
+                </div>
+                
+                <div class="stats-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🏆</div>
+                            <div class="stat-info">
+                                <h3 id="totalWorkouts">0</h3>
+                                <p>Всего тренировок</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-info">
+                                <h3 id="totalTime">0ч</h3>
+                                <p>Время тренировок</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">❤️</div>
+                            <div class="stat-info">
+                                <h3 id="favoriteDay">-</h3>
+                                <p>Любимый день</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-info">
+                                <h3 id="currentStreakStat">0</h3>
+                                <p>Дней подряд</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="settingsModal" class="modal">
+            <div class="modal-backdrop" onclick="closeModal('settingsModal')"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>⚙️ Настройки</h2>
+                    <button class="close-btn modern-close" onclick="closeModal('settingsModal')">
+                        <span>✕</span>
+                    </button>
+                </div>
+                
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <h3>👤 Профиль</h3>
+                        <div class="setting-item">
+                            <label for="heightInput">Рост (см):</label>
+                            <input type="number" id="heightInput" value="180" min="140" max="220">
+                        </div>
+                        <div class="setting-item">
+                            <label for="weightInput">Вес (кг):</label>
+                            <input type="number" id="weightInput" value="71" min="40" max="150">
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>🔔 Уведомления</h3>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="notificationsEnabled" checked>
+                                <span class="toggle-slider"></span>
+                                Напоминания о тренировках
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>💾 Данные</h3>
+                        <div class="setting-buttons">
+                            <button onclick="exportData()" class="setting-btn export-btn">
+                                📤 Экспорт данных
+                            </button>
+                            <button onclick="resetProgress()" class="setting-btn danger-btn">
+                                🗑️ Сбросить прогресс
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-actions">
+                        <button onclick="saveSettings()" class="save-settings-btn">
+                            💾 Сохранить настройки
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('SW зарегистрирован: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW не зарегистрирован: ', registrationError);
+                    });
+            });
+        }
+
+        // Инициализация приложения
+        document.addEventListener('DOMContentLoaded', function() {
+            updateQuickStats();
+            updateWorkoutProgress();
+        });
+    </script>
+</body>
+</html>
