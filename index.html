@@ -1,0 +1,3133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ФитПро Профессионал</title>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #3730A3;
+            --secondary: #06B6D4;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background: #0A0A0A;
+            --surface: #1A1A1A;
+            --surface-elevated: #262626;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A3A3A3;
+            --text-muted: #525252;
+            --border: #262626;
+            --border-light: #404040;
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+            min-height: 100vh;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .app-container {
+            max-width: 428px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        /* SVG Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+        }
+
+        .icon-lg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-xl {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--background) 0%, rgba(26, 26, 26, 0.95) 100%);
+            padding: 24px 24px 20px;
+            position: sticky;
+            top: var(--safe-top);
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .app-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Quick Stats */
+        .stats-container {
+            padding: 0 24px 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:active {
+            transform: scale(0.98);
+            background: var(--surface-elevated);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 428px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 8px 24px calc(8px + var(--safe-bottom));
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            min-width: 60px;
+            color: var(--text-muted);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-item:not(.active):active {
+            background: var(--surface);
+            color: var(--text-secondary);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Content */
+        .content {
+            padding: 0 24px 120px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        /* Workout Cards */
+        .workout-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .workout-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .workout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .workout-card:active {
+            transform: translateY(2px);
+            background: var(--surface-elevated);
+            box-shadow: var(--shadow);
+        }
+
+        .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .workout-info {
+            flex: 1;
+        }
+
+        .workout-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .workout-category {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .workout-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .workout-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .workout-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .workout-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            border: none;
+            border-radius: var(--radius);
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            min-height: 48px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            word-break: keep-all;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background: var(--primary-dark);
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--surface-elevated);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:active {
+            background: var(--surface);
+            transform: scale(0.98);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Progress Section */
+        .progress-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .progress-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .progress-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .progress-stat {
+            text-align: center;
+        }
+
+        .progress-stat .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress-stat .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Settings Form */
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .form-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 16px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--primary);
+            background: var(--background);
+        }
+
+        .form-select option {
+            background: var(--surface);
+            color: var(--text-primary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--background);
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            background: var(--surface);
+            padding: 20px 24px;
+            padding-top: calc(20px + var(--safe-top));
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .close-btn {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:active {
+            background: var(--surface);
+            transform: scale(0.95);
+        }
+
+        .modal-body {
+            padding: 24px;
+            padding-bottom: calc(24px + var(--safe-bottom));
+        }
+
+        /* Workout Timer */
+        .workout-timer {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .timer-btn:active {
+            transform: scale(0.95);
+            background: var(--primary-dark);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--surface-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .time-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .time-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .time-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .time-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Exercise List */
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .exercise-item {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .exercise-item.current {
+            border-color: var(--primary);
+            background: rgba(79, 70, 229, 0.05);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .exercise-item.completed {
+            opacity: 0.6;
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .exercise-category {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exercise-number {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .exercise-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .exercise-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px;
+            background: var(--surface-elevated);
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .detail-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exercise-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: var(--surface-elevated);
+            border-radius: var(--radius);
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .progress-sets {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .exercise-actions {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
+
+        .btn-exercise {
+            flex: 1;
+            min-height: 48px;
+            font-size: 14px;
+            padding: 12px 16px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* Rest Timer Modal */
+        .rest-timer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            backdrop-filter: blur(20px);
+        }
+
+        .rest-timer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            min-width: 280px;
+        }
+
+        .rest-timer-display {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--warning);
+            margin-bottom: 16px;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+
+        .rest-timer-label {
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .rest-timer-controls {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .rest-btn {
+            min-width: 100px;
+        }
+
+        /* Exercise Instruction Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .exercise-gif-container {
+            position: relative;
+            background: var(--background);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .exercise-gif {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            display: block;
+        }
+
+        .gif-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-secondary);
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .gif-error {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+        }
+
+        .exercise-instruction {
+            margin-bottom: 24px;
+        }
+
+        .exercise-instruction h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .exercise-instruction p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .exercise-params {
+            background: var(--background);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .param-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .param-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .param-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 24px;
+            padding-bottom: calc(24px + var(--safe-bottom));
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+        }
+
+        .modal-footer .btn {
+            flex: 1;
+            justify-content: center;
+            max-width: none;
+            overflow: hidden;
+        }
+
+        /* Media Queries для улучшения верстки */
+        @media (max-width: 380px) {
+            .content {
+                padding: 0 16px 120px;
+            }
+            
+            .exercise-item {
+                padding: 16px;
+            }
+            
+            .btn {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+            
+            .btn-exercise {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .modal-footer {
+                padding: 16px;
+                gap: 8px;
+            }
+            
+            .exercise-actions {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .content {
+                padding: 0 12px 120px;
+            }
+            
+            .exercise-item {
+                padding: 12px;
+            }
+            
+            .btn {
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+            
+            .btn-exercise {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            
+            .modal-footer {
+                padding: 12px;
+                gap: 6px;
+            }
+            
+            .exercise-actions {
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="app-logo">
+                    <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                        <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>FitPro</h1>
+                    <p>Профессиональная система тренировок</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="todayWorkouts">0</div>
+                    <div class="stat-label">Сегодня</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="weekWorkouts">0</div>
+                    <div class="stat-label">Неделя</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalWorkouts">0</div>
+                    <div class="stat-label">Всего</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streakDays">0</div>
+                    <div class="stat-label">Серия</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Workouts Section -->
+            <div class="content-section active" id="workoutsSection">
+                <h2 class="section-title">Программы тренировок</h2>
+                <div class="workout-grid" id="workoutGrid">
+                    <!-- Программы тренировок будут генерироваться динамически -->
+                </div>>
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Грудь и трицепс</h3>
+                                <div class="workout-category">Верх тела</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Комплексное развитие грудных мышц и трицепса с базовыми и изолирующими упражнениями.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>45-60 мин</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workout-card" onclick="startWorkout(2)">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Спина и бицепс</h3>
+                                <div class="workout-category">Верх тела</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M17,8C8,10 5.5,16.5 3,21C5.5,18.5 12,14.5 17,8M3.5,18.49L6,16.91L7.73,17.45L5.23,19.03L3.5,18.49Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Построение сильной широкой спины и мощного бицепса с тяговыми движениями.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>45-60 мин</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workout-card" onclick="startWorkout(3)">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Ноги и плечи</h3>
+                                <div class="workout-category">Низ и верх</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M8,2A2,2 0 0,1 10,4V16A2,2 0 0,1 8,18H6A2,2 0 0,1 4,16V4A2,2 0 0,1 6,2H8M8,4H6V16H8V4M16,6A2,2 0 0,1 18,8V20A2,2 0 0,1 16,22H14A2,2 0 0,1 12,20V8A2,2 0 0,1 14,6H16M16,8H14V20H16V8Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Мощные ноги и широкие плечи. Развитие функциональной силы.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>50-65 мин</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workout-card" onclick="startWorkout(4)">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Функциональная</h3>
+                                <div class="workout-category">Все тело</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M13,1L15.5,3.5L11,8H7.5C7.1,8 6.7,8.1 6.3,8.3L2,12L4,14L8.3,9.7C8.7,9.3 8.9,8.9 8.9,8.5L13,4.5V1M13,23L10.5,20.5L15,16H18.5C18.9,16 19.3,15.9 19.7,15.7L24,12L22,10L17.7,14.3C17.3,14.7 17.1,15.1 17.1,15.5L13,19.5V23Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Высокоинтенсивные комплексные движения для всего тела.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>30-45 мин</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workout-card" onclick="startWorkout(5)">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Кардио и пресс</h3>
+                                <div class="workout-category">Кондиция</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Жиросжигание и укрепление мышц кора. Высокотемповая кардиотренировка.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>30-40 мин</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workout-card" onclick="startWorkout(6)">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">Восстановление</h3>
+                                <div class="workout-category">Активный отдых</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">Активное восстановление с растяжкой и мобильностью. Фокус на ментальное здоровье.</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>6 упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span>20-30 мин</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="content-section" id="progressSection">
+                <h2 class="section-title">Аналитика прогресса</h2>
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Статистика тренировок</h3>
+                        </div>
+                        <div class="progress-stats">
+                            <div class="progress-stat">
+                                <div class="stat-value" id="totalWorkoutsDetail">0</div>
+                                <div class="stat-label">Всего тренировок</div>
+                            </div>
+                            <div class="progress-stat">
+                                <div class="stat-value" id="totalTimeDetail">0</div>
+                                <div class="stat-label">Всего минут</div>
+                            </div>
+                            <div class="progress-stat">
+                                <div class="stat-value" id="avgDurationDetail">0</div>
+                                <div class="stat-label">Средняя длительность</div>
+                            </div>
+                            <div class="progress-stat">
+                                <div class="stat-value" id="lastWorkoutDetail">-</div>
+                                <div class="stat-label">Последняя тренировка</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settingsSection">
+                <h2 class="section-title">Настройки</h2>
+                <div class="settings-form">
+                    <div class="form-section">
+                        <h3 class="form-section-title">Личная информация</h3>
+                        <div class="form-group">
+                            <label class="form-label">Рост (см)</label>
+                            <input type="number" class="form-input" id="heightInput" value="180" min="140" max="220">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Вес (кг)</label>
+                            <input type="number" class="form-input" id="weightInput" value="71" min="40" max="150">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Предпочтения тренировок</h3>
+                        <div class="form-group">
+                            <label class="form-label">Основная цель</label>
+                            <select class="form-select" id="goalSelect">
+                                <option value="muscle">Набор мышечной массы</option>
+                                <option value="strength">Увеличение силы</option>
+                                <option value="endurance">Выносливость</option>
+                                <option value="weight-loss">Снижение веса</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Уровень опыта</label>
+                            <select class="form-select" id="levelSelect">
+                                <option value="beginner">Новичок</option>
+                                <option value="intermediate" selected>Средний</option>
+                                <option value="advanced">Продвинутый</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Время отдыха (секунды)</label>
+                            <input type="number" class="form-input" id="restTimeInput" value="60" min="30" max="180">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-full" onclick="saveSettings()">
+                        <svg class="icon-sm" viewBox="0 0 24 24">
+                            <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                        </svg>
+                        Сохранить настройки
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('workouts')">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/>
+                </svg>
+                <div class="nav-label">Тренировки</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('progress')">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                </svg>
+                <div class="nav-label">Прогресс</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('settings')">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+                </svg>
+                <div class="nav-label">Настройки</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Modal -->
+    <div id="workoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="workoutModalTitle">Сессия тренировки</h2>
+                <div class="close-btn" onclick="closeWorkout()">
+                    <svg class="icon-sm" viewBox="0 0 24 24">
+                        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- Timer Section -->
+                <div class="workout-timer">
+                    <div class="timer-display" id="workoutTimerDisplay">00:00</div>
+                    <div class="timer-label">Длительность тренировки</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn" onclick="toggleWorkoutTimer()">
+                            <svg class="icon" viewBox="0 0 24 24" id="timerIcon">
+                                <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">Прогресс тренировки</div>
+                        <div class="progress-percentage" id="workoutProgress">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="workoutProgressFill"></div>
+                    </div>
+                    <div class="time-indicator">
+                        <div class="time-info">
+                            <span class="time-label">Оставшееся время:</span>
+                            <span class="time-value" id="remainingTime">--:--</span>
+                        </div>
+                        <div class="time-info">
+                            <span class="time-label">Планируемое время:</span>
+                            <span class="time-value" id="plannedTime">90 мин</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercise List -->
+                <div class="exercise-list" id="exerciseList">
+                    <!-- Упражнения будут добавлены здесь -->
+                </div>
+
+                <!-- Workout Controls -->
+                <div style="margin-top: 24px;">
+                    <button class="btn btn-primary btn-full" onclick="finishWorkout()">
+                        <svg class="icon-sm" viewBox="0 0 24 24">
+                            <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                        </svg>
+                        Завершить тренировку
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rest Timer Modal -->
+    <div id="restTimerModal" class="rest-timer-modal">
+        <div class="rest-timer">
+            <div class="rest-timer-display" id="restTimerDisplay">60</div>
+            <div class="rest-timer-label">Отдых между подходами</div>
+            <div class="rest-timer-controls">
+                <button class="btn btn-secondary rest-btn" onclick="skipRest()">Пропустить</button>
+                <button class="btn btn-primary rest-btn" onclick="addRestTime()">+30с</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальные переменные
+        let currentTab = 'workouts';
+        let currentWorkout = null;
+        let currentExerciseIndex = 0;
+        let exerciseSets = {};
+        let workoutTimer = null;
+        let workoutSeconds = 0;
+        let isWorkoutTimerRunning = false;
+        let restTimer = null;
+        let restSeconds = 0;
+
+        // База данных упражнений
+        const workoutPrograms = {
+            1: {
+                name: "ПОНЕДЕЛЬНИК - Грудь + Трицепс + Пресс",
+                category: "День 1 - Верх тела",
+                duration: 90,
+                description: "Проработка грудных мышц, трицепсов и обязательный комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Жим штанги лежа", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 1.2", 
+                        rest: 90,
+                        instruction: "Лягте на горизонтальную скамью, возьмитесь за гриф хватом чуть шире плеч. Снимите штангу со стоек, опустите к средней части груди. На выдохе выжмите штангу вверх до полного выпрямления рук.",
+                        gifUrl: "chest_bench_press.gif"
+                    },
+                    { 
+                        name: "Жим гантелей на наклонной скамье", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 75,
+                        instruction: "Установите скамью под углом 30° и лягте на неё с гантелями. Опустите гантели к верхней части груди. На выдохе выжмите гантели вверх и слегка внутрь.",
+                        gifUrl: "chest_incline_dumbbell.gif"
+                    },
+                    { 
+                        name: "Отжимания на брусьях", 
+                        category: "Базовое", 
+                        sets: 3, 
+                        reps: "8-15", 
+                        weight: "bodyweight", 
+                        rest: 90,
+                        instruction: "Примите упор на параллельных брусьях. Слегка наклоните корпус вперед. Опуститесь, сгибая руки, пока плечи не будут параллельны полу. На выдохе выжмите тело вверх.",
+                        gifUrl: "chest_dips.gif"
+                    },
+                    { 
+                        name: "Разведение гантелей лежа", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "10-15", 
+                        weight: "bodyweight * 0.25", 
+                        rest: 60,
+                        instruction: "Лягте на скамью с гантелями в руках. Медленно разведите руки в стороны, сохраняя фиксированный угол в локтях. Опустите гантели до уровня груди и сведите обратно.",
+                        gifUrl: "chest_flyes.gif"
+                    },
+                    { 
+                        name: "Жим штанги узким хватом", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 0.8", 
+                        rest: 90,
+                        instruction: "Лягте на горизонтальную скамью. Возьмите штангу хватом на ширине плеч или уже. Опустите штангу к нижней части груди. На выдохе выжмите штангу вверх.",
+                        gifUrl: "triceps_close_grip_press.gif"
+                    },
+                    { 
+                        name: "Разгибания рук на блоке", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 60,
+                        instruction: "Встаньте лицом к верхнему блоку, возьмите рукоятку хватом сверху. Прижмите локти к бокам. На выдохе разогните руки, опуская рукоятку вниз.",
+                        gifUrl: "triceps_pushdown.gif"
+                    },
+                    { 
+                        name: "Французский жим лежа", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 60,
+                        instruction: "Лягте на скамью, держите штангу или EZ-гриф над грудью. Медленно согните руки в локтях, опуская вес за голову. На выдохе выпрямите руки.",
+                        gifUrl: "triceps_skull_crushers.gif"
+                    },
+                    { 
+                        name: "Классические скручивания", 
+                        category: "Пресс", 
+                        sets: 4, 
+                        reps: "15-20", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Лягте на спину, согните ноги в коленях. Руки за головой. На выдохе напрягите мышцы пресса и поднимите лопатки от пола. Задержитесь на 1-2 секунды.",
+                        gifUrl: "abs_crunches.gif"
+                    },
+                    { 
+                        name: "Планка", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "45-90 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Примите положение упора на предплечьях. Локти под плечевыми суставами. Тело образует прямую линию от головы до пяток. Напрягите мышцы пресса и ягодиц.",
+                        gifUrl: "abs_plank.gif"
+                    },
+                    { 
+                        name: "Велосипед", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "20-30", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Лягте на спину, поднимите лопатки от пола. Поочередно подтягивайте колени к груди, одновременно поворачивая корпус. Касайтесь правым локтем левого колена и наоборот.",
+                        gifUrl: "abs_bicycle.gif"
+                    },
+                    { 
+                        name: "Подъемы ног лежа", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Лягте на спину, руки вдоль тела. Ноги вместе, выпрямлены. На выдохе поднимите ноги до угла 90° с полом. Медленно опустите, не касаясь пола.",
+                        gifUrl: "abs_leg_raises.gif"
+                    }
+                ]
+            },
+            2: {
+                name: "ВТОРНИК - Спина + Бицепс + Пресс",
+                category: "День 2 - Тяговые движения",
+                duration: 90,
+                description: "Проработка мышц спины, бицепсов и обязательный комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Подтягивания широким хватом", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "6-12", 
+                        weight: "bodyweight", 
+                        rest: 120,
+                        instruction: "Возьмитесь за перекладину хватом шире плеч. Подтянитесь, касаясь перекладины верхней частью груди. Лопатки сводятся в верхней точке. Медленно опуститесь.",
+                        gifUrl: "back_wide_pullups.gif"
+                    },
+                    { 
+                        name: "Тяга штанги в наклоне", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 1.0", 
+                        rest: 90,
+                        instruction: "Наклонитесь вперед примерно на 45°, держа штангу. Тяните штангу к нижней части живота. Сводите лопатки в верхней точке. Контролируемо опустите штангу.",
+                        gifUrl: "back_barbell_row.gif"
+                    },
+                    { 
+                        name: "Тяга верхнего блока к груди", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.8", 
+                        rest: 75,
+                        instruction: "Сядьте в тренажер, возьмитесь за рукоятку широким хватом. Слегка отклоните корпус назад. Тяните рукоятку к верхней части груди. Сводите лопатки.",
+                        gifUrl: "back_lat_pulldown.gif"
+                    },
+                    { 
+                        name: "Тяга гантели одной рукой", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.45", 
+                        rest: 75,
+                        instruction: "Упритесь коленом и рукой в скамью. Тяните гантель к поясу свободной рукой. Максимально сводите лопатку в верхней точке. Медленно опустите.",
+                        gifUrl: "back_single_arm_row.gif"
+                    },
+                    { 
+                        name: "Подтягивания обратным хватом", 
+                        category: "Базовое", 
+                        sets: 3, 
+                        reps: "8-12", 
+                        weight: "bodyweight", 
+                        rest: 90,
+                        instruction: "Возьмитесь за перекладину хватом снизу на ширине плеч. Подтянитесь до касания перекладины грудью. Держите локти прижатыми к телу.",
+                        gifUrl: "biceps_chin_ups.gif"
+                    },
+                    { 
+                        name: "Сгибания рук со штангой стоя", 
+                        category: "Изоляция", 
+                        sets: 4, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 60,
+                        instruction: "Встаньте прямо, держите штангу хватом снизу. Локти прижаты к бокам. На выдохе согните руки, поднимая штангу к плечам. Задержитесь на секунду.",
+                        gifUrl: "biceps_barbell_curls.gif"
+                    },
+                    { 
+                        name: "Молотковые сгибания", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.25", 
+                        rest: 60,
+                        instruction: "Держите гантели нейтральным хватом (ладони друг к другу). Локти прижаты к телу. Согните руки, поднимая гантели к плечам. Сохраняйте положение ладоней.",
+                        gifUrl: "biceps_hammer_curls.gif"
+                    },
+                    { 
+                        name: "Русские скручивания", 
+                        category: "Пресс", 
+                        sets: 4, 
+                        reps: "15-20", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Сядьте на пол, согните колени, оторвите стопы от пола. Отклоните корпус назад под углом 45°. Вращайте корпус из стороны в сторону, касаясь руками пола.",
+                        gifUrl: "abs_russian_twists.gif"
+                    },
+                    { 
+                        name: "Боковая планка", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Лягте на бок, опираясь на предплечье. Поднимите таз, образуя прямую линию от головы до стоп. Удерживайте положение. Выполните на каждую сторону.",
+                        gifUrl: "abs_side_plank.gif"
+                    },
+                    { 
+                        name: "Подъемы ног в висе", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "10-15", 
+                        weight: "bodyweight", 
+                        rest: 75,
+                        instruction: "Повисните на перекладине, хват на ширине плеч. На выдохе поднимите прямые ноги до параллели с полом или выше. Зафиксируйте на 1-2 секунды.",
+                        gifUrl: "abs_hanging_leg_raises.gif"
+                    },
+                    { 
+                        name: "Вакуум", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "15-30 сек", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Встаньте прямо или сядьте. Сделайте полный выдох. Втяните живот максимально глубоко, прижимая пупок к позвоночнику. Удерживайте 15-30 секунд.",
+                        gifUrl: "abs_vacuum.gif"
+                    }
+                ]
+            },
+            3: {
+                name: "СРЕДА - Ноги + Ягодицы + Пресс",
+                category: "День 3 - Нижняя часть тела",
+                duration: 90,
+                description: "Проработка всех мышц ног, ягодиц и обязательный комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Приседания со штангой", 
+                        category: "Базовое", 
+                        sets: 5, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 1.5", 
+                        rest: 120,
+                        instruction: "Поместите штангу на верхнюю часть спины. Ноги на ширине плеч. Присядьте, отводя таз назад и сгибая колени. Опуститесь до параллели бедер с полом. Мощно встаньте.",
+                        gifUrl: "legs_squats.gif"
+                    },
+                    { 
+                        name: "Румынская становая тяга", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 1.2", 
+                        rest: 90,
+                        instruction: "Держите штангу прямым хватом. Ноги слегка согнуты в коленях. Наклоняйтесь вперед, отводя таз назад. Штанга скользит вдоль ног. Чувствуйте растяжение задней поверхности бедра.",
+                        gifUrl: "legs_rdl.gif"
+                    },
+                    { 
+                        name: "Жим ногами в тренажере", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 2.0", 
+                        rest: 90,
+                        instruction: "Сядьте в тренажер, спина плотно прижата к спинке. Поставьте ноги на платформу на ширине плеч. Согните ноги, приближая колени к груди. Выпрямите ноги.",
+                        gifUrl: "legs_leg_press.gif"
+                    },
+                    { 
+                        name: "Болгарские приседания", 
+                        category: "Базовое", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 75,
+                        instruction: "Встаньте спиной к скамье на расстоянии одного шага. Положите верхнюю часть стопы задней ноги на скамью. Приседайте на передней ноге до угла 90°.",
+                        gifUrl: "legs_bulgarian_squats.gif"
+                    },
+                    { 
+                        name: "Выпады с гантелями", 
+                        category: "Базовое", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 75,
+                        instruction: "Держите гантели в руках. Сделайте большой шаг вперед. Опуститесь, сгибая обе ноги до угла 90°. Вернитесь в исходное положение или шагните другой ногой.",
+                        gifUrl: "legs_lunges.gif"
+                    },
+                    { 
+                        name: "Подъемы на носки стоя", 
+                        category: "Изоляция", 
+                        sets: 4, 
+                        reps: "15-20", 
+                        weight: "bodyweight * 1.2", 
+                        rest: 60,
+                        instruction: "Встаньте носками на платформу, пятки свисают. Опуститесь максимально низко, растягивая икры. Поднимитесь на носки как можно выше. Задержитесь на 1-2 секунды.",
+                        gifUrl: "legs_calf_raises.gif"
+                    },
+                    { 
+                        name: "Сгибания ног в тренажере", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 60,
+                        instruction: "Лягте в тренажер для сгибания ног. Согните ноги, подтягивая пятки к ягодицам. Медленно разогните ноги, контролируя негативную фазу.",
+                        gifUrl: "legs_hamstring_curls.gif"
+                    },
+                    { 
+                        name: "Скручивания на наклонной скамье", 
+                        category: "Пресс", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Лягте на наклонную скамью головой вниз, зафиксировав ноги. Руки скрестите на груди. Поднимите верхнюю часть корпуса, сокращая мышцы пресса.",
+                        gifUrl: "abs_incline_crunches.gif"
+                    },
+                    { 
+                        name: "Скалолаз", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Примите положение планки на прямых руках. Поочередно подтягивайте колени к груди в быстром темпе. Спина остается прямой, таз неподвижен.",
+                        gifUrl: "abs_mountain_climbers.gif"
+                    },
+                    { 
+                        name: "V-подъемы", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "10-15", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Сядьте на пол, ноги выпрямлены. Откиньтесь назад, оторвав ступни от пола. Одновременно поднимите ноги и корпус, формируя букву V. Руки вытяните параллельно голеням.",
+                        gifUrl: "abs_v_ups.gif"
+                    }
+                ]
+            },
+            4: {
+                name: "ЧЕТВЕРГ - Плечи + Пресс + Кардио",
+                category: "День 4 - Дельты и кондиция",
+                duration: 90,
+                description: "Проработка всех пучков дельтовидных мышц, комплекс на пресс и кардиотренировка",
+                exercises: [
+                    { 
+                        name: "Армейский жим", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "6-10", 
+                        weight: "bodyweight * 0.6", 
+                        rest: 90,
+                        instruction: "Встаньте прямо, штанга на уровне ключиц. Хват чуть шире плеч. На выдохе выжмите штангу строго вверх над головой. Держите корпус напряженным и стабильным.",
+                        gifUrl: "shoulders_military_press.gif"
+                    },
+                    { 
+                        name: "Жим гантелей сидя", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 0.35", 
+                        rest: 75,
+                        instruction: "Сядьте на скамью с вертикальной спинкой. Держите гантели на уровне плеч, ладони направлены вперед. Выжмите гантели вверх до полного выпрямления рук.",
+                        gifUrl: "shoulders_dumbbell_press.gif"
+                    },
+                    { 
+                        name: "Разведение рук с гантелями в стороны", 
+                        category: "Изоляция", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.15", 
+                        rest: 60,
+                        instruction: "Встаньте прямо, гантели в опущенных руках. Руки слегка согнуты в локтях. Поднимите руки в стороны до уровня плеч. Ведите движение локтями.",
+                        gifUrl: "shoulders_lateral_raises.gif"
+                    },
+                    { 
+                        name: "Подъем гантелей перед собой", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.15", 
+                        rest: 60,
+                        instruction: "Встаньте прямо, держите гантели перед бедрами. Руки слегка согнуты в локтях. Поднимите одну или обе руки перед собой до уровня плеч.",
+                        gifUrl: "shoulders_front_raises.gif"
+                    },
+                    { 
+                        name: "Разведение рук в наклоне", 
+                        category: "Изоляция", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.12", 
+                        rest: 60,
+                        instruction: "Наклонитесь вперед, держа гантели в опущенных руках. Спина прямая, колени слегка согнуты. Разведите руки в стороны до уровня плеч.",
+                        gifUrl: "shoulders_rear_flyes.gif"
+                    },
+                    { 
+                        name: "Тяга штанги к подбородку", 
+                        category: "Базовое", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 75,
+                        instruction: "Встаньте прямо, держите штангу узким хватом сверху. Подтяните штангу вертикально вверх к подбородку. Локти поднимаются высоко и в стороны.",
+                        gifUrl: "shoulders_upright_rows.gif"
+                    },
+                    { 
+                        name: "Шраги с гантелями", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 60,
+                        instruction: "Встаньте прямо, гантели в опущенных руках. Поднимите плечи вверх, стараясь 'дотянуться' до ушей. Задержитесь на секунду. Не вращайте плечами.",
+                        gifUrl: "shoulders_shrugs.gif"
+                    },
+                    { 
+                        name: "Скручивания с утяжелением", 
+                        category: "Пресс", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.1", 
+                        rest: 60,
+                        instruction: "Примите положение для классических скручиваний. Расположите диск или гантель на груди, придерживая руками. Выполняйте скручивания с дополнительным весом.",
+                        gifUrl: "abs_weighted_crunches.gif"
+                    },
+                    { 
+                        name: "Dead Bug", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Лягте на спину, поднимите руки вертикально вверх. Согните ноги под углом 90°. Медленно опустите противоположную руку и ногу к полу. Вернитесь и повторите с другой стороны.",
+                        gifUrl: "abs_dead_bug.gif"
+                    },
+                    { 
+                        name: "Высокоинтенсивное кардио", 
+                        category: "Кардио", 
+                        sets: 4, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Выполняйте: берпи, прыжки через скакалку, высокие колени, джампинг-джекс в быстром темпе. Чередуйте упражнения или выберите одно.",
+                        gifUrl: "cardio_hiit.gif"
+                    }
+                ]
+            },
+            5: {
+                name: "ПЯТНИЦА - Руки (Бицепс+Трицепс) + Пресс",
+                category: "День 5 - Специализация рук",
+                duration: 90,
+                description: "Интенсивная проработка бицепсов, трицепсов и обязательный комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Сгибания рук с гантелями сидя", 
+                        category: "Изоляция", 
+                        sets: 4, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 75,
+                        instruction: "Сядьте на скамью с прямой спиной, гантели в опущенных руках. Ладони смотрят вперед. Согните руку в локте, поднимая гантель к плечу. Максимально сократите бицепс.",
+                        gifUrl: "biceps_seated_curls.gif"
+                    },
+                    { 
+                        name: "Концентрированные сгибания", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.2", 
+                        rest: 60,
+                        instruction: "Сядьте на скамью, расставив ноги. Наклонитесь вперед, упритесь локтем во внутреннюю поверхность бедра. Согните руку, поднимая гантель к плечу.",
+                        gifUrl: "biceps_concentration_curls.gif"
+                    },
+                    { 
+                        name: "21-повторение", 
+                        category: "Интенсивная техника", 
+                        sets: 2, 
+                        reps: "21", 
+                        weight: "bodyweight * 0.25", 
+                        rest: 90,
+                        instruction: "7 повторений в нижней половине амплитуды, 7 в верхней половине, 7 в полной амплитуде. Без отдыха между частями. Интенсивная техника для бицепса.",
+                        gifUrl: "biceps_21s.gif"
+                    },
+                    { 
+                        name: "Сгибания Зоттмана", 
+                        category: "Комплексное", 
+                        sets: 3, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 0.2", 
+                        rest: 60,
+                        instruction: "Поднимите гантели обычным хватом. В верхней точке поверните кисти (ладони вниз). Медленно опустите обратным хватом. В нижней точке поверните кисти обратно.",
+                        gifUrl: "biceps_zottman_curls.gif"
+                    },
+                    { 
+                        name: "Отжимания на брусьях (трицепс)", 
+                        category: "Базовое", 
+                        sets: 4, 
+                        reps: "8-15", 
+                        weight: "bodyweight", 
+                        rest: 90,
+                        instruction: "Держите тело вертикально, локти прижаты к бокам. Опуститесь до угла 90° в локтевых суставах. Мощно выпрямите руки. Акцент на трицепс.",
+                        gifUrl: "triceps_dips.gif"
+                    },
+                    { 
+                        name: "Разгибание одной руки с гантелью в наклоне", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.15", 
+                        rest: 60,
+                        instruction: "Встаньте сбоку от скамьи, упритесь коленом и рукой. Рабочая рука согнута под 90°. Полностью разогните руку назад. Плечо параллельно полу и неподвижно.",
+                        gifUrl: "triceps_kickbacks.gif"
+                    },
+                    { 
+                        name: "Калифорнийский жим", 
+                        category: "Комплексное", 
+                        sets: 3, 
+                        reps: "8-12", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 75,
+                        instruction: "Лягте на скамью с EZ-грифом. Опустите вес к верхней части груди, сгибая руки и отводя локти назад. Выжмите вес вверх. Комбинирует французский жим и жим узким хватом.",
+                        gifUrl: "triceps_california_press.gif"
+                    },
+                    { 
+                        name: "Разгибания рук на блоке с веревкой", 
+                        category: "Изоляция", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 60,
+                        instruction: "Возьмите веревочную рукоятку на верхнем блоке. Разогните руки вниз, в конечной точке разведите концы веревки в стороны для максимального сокращения трицепса.",
+                        gifUrl: "triceps_rope_pushdown.gif"
+                    },
+                    { 
+                        name: "Ролик для пресса", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "8-12", 
+                        weight: "bodyweight", 
+                        rest: 90,
+                        instruction: "Встаньте на колени, ролик перед собой. Напрягите мышцы кора. Медленно выкатывайте ролик вперед, опуская корпус. Мощным сокращением мышц живота вернитесь назад.",
+                        gifUrl: "abs_wheel_rollout.gif"
+                    },
+                    { 
+                        name: "Подъемы ног на скамье", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "12-15", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Лягте на скамью, возьмитесь за ее край за головой. Согните ноги в коленях под 90°. Подтяните колени к груди, отрывая таз от скамьи. Движение за счет пресса.",
+                        gifUrl: "abs_reverse_crunches.gif"
+                    },
+                    { 
+                        name: "Bird Dog", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "8-10", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Встаньте на четвереньки. Одновременно вытяните противоположную руку и ногу. Удерживайте 5-10 секунд. Рука и нога параллельны полу. Напрягайте мышцы кора.",
+                        gifUrl: "abs_bird_dog.gif"
+                    }
+                ]
+            },
+            6: {
+                name: "СУББОТА - Функциональная + Все тело + Пресс",
+                category: "День 6 - Функциональный тренинг",
+                duration: 90,
+                description: "Комплексные движения, функциональные упражнения и обязательный комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Берпи", 
+                        category: "Функциональное", 
+                        sets: 4, 
+                        reps: "8-12", 
+                        weight: "bodyweight", 
+                        rest: 75,
+                        instruction: "Присядьте, положите руки на пол. Прыжком отведите ноги назад в планку. Отжимание (опционально). Прыжком подтяните ноги к рукам. Выпрыгните вверх с поднятыми руками.",
+                        gifUrl: "functional_burpees.gif"
+                    },
+                    { 
+                        name: "Турецкий подъем", 
+                        category: "Функциональное", 
+                        sets: 3, 
+                        reps: "5-8", 
+                        weight: "bodyweight * 0.2", 
+                        rest: 90,
+                        instruction: "Лягте на спину с гантелью в одной руке. Поднимите руку вверх. Поэтапно встаньте, не опуская руку. Обратная последовательность при опускании. Смените руку.",
+                        gifUrl: "functional_turkish_getup.gif"
+                    },
+                    { 
+                        name: "Приседания с прыжком", 
+                        category: "Плиометрика", 
+                        sets: 4, 
+                        reps: "12-15", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Выполните обычное приседание. В нижней точке мощно оттолкнитесь и выпрыгните вверх. Мягко приземлитесь и сразу переходите к следующему повторению.",
+                        gifUrl: "functional_jump_squats.gif"
+                    },
+                    { 
+                        name: "Выпады с весом (чередующиеся)", 
+                        category: "Функциональное", 
+                        sets: 3, 
+                        reps: "10-12", 
+                        weight: "bodyweight * 0.3", 
+                        rest: 75,
+                        instruction: "Держите гантели в руках. Делайте выпады вперед, чередуя ноги. Каждый шаг - глубокий выпад до угла 90° в обеих ногах. Держите корпус прямо.",
+                        gifUrl: "functional_walking_lunges.gif"
+                    },
+                    { 
+                        name: "Отжимания с хлопком", 
+                        category: "Плиометрика", 
+                        sets: 3, 
+                        reps: "5-10", 
+                        weight: "bodyweight", 
+                        rest: 75,
+                        instruction: "Выполните отжимание. В верхней фазе мощно оттолкнитесь от пола, сделайте хлопок руками и мягко приземлитесь. Требует хорошей подготовки.",
+                        gifUrl: "functional_clapping_pushups.gif"
+                    },
+                    { 
+                        name: "Махи гирей", 
+                        category: "Функциональное", 
+                        sets: 4, 
+                        reps: "15-20", 
+                        weight: "bodyweight * 0.4", 
+                        rest: 60,
+                        instruction: "Возьмите гирю двумя руками. Ноги шире плеч. Качайте гирю между ног и вверх до уровня груди. Движение начинается от бедер, а не от рук.",
+                        gifUrl: "functional_kettlebell_swings.gif"
+                    },
+                    { 
+                        name: "Медвежья походка", 
+                        category: "Функциональное", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Встаньте на четвереньки, колени на 2-3 см от пола. Передвигайтесь вперед, одновременно двигая противоположную руку и ногу. Держите спину прямой.",
+                        gifUrl: "functional_bear_crawl.gif"
+                    },
+                    { 
+                        name: "L-Sit", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "10-30 сек", 
+                        weight: "bodyweight", 
+                        rest: 90,
+                        instruction: "Сядьте между параллельными брусьями. Упритесь ладонями, выпрямите руки. Поднимите тело, выпрямив ноги параллельно полу. Удерживайте максимально долго.",
+                        gifUrl: "abs_l_sit.gif"
+                    },
+                    { 
+                        name: "Драконий флаг", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "5-8", 
+                        weight: "bodyweight", 
+                        rest: 120,
+                        instruction: "Лягте на скамью, ухватитесь за край за головой. Поднимите выпрямленные ноги и корпус, опираясь только лопатками. Тело - прямая линия. Медленно опуститесь.",
+                        gifUrl: "abs_dragon_flag.gif"
+                    },
+                    { 
+                        name: "Комплексная планка", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "45-90 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Планка на предплечьях 15 сек → планка на прямых руках 15 сек → боковая планка правая 15 сек → боковая планка левая 15 сек. Без отдыха между переходами.",
+                        gifUrl: "abs_plank_complex.gif"
+                    }
+                ]
+            },
+            7: {
+                name: "ВОСКРЕСЕНЬЕ - Активное восстановление + Растяжка + Пресс",
+                category: "День 7 - Восстановление",
+                duration: 90,
+                description: "Восстановительная тренировка, глубокая растяжка и легкий комплекс на пресс",
+                exercises: [
+                    { 
+                        name: "Комплекс йоги (Сурья Намаскар)", 
+                        category: "Йога", 
+                        sets: 5, 
+                        reps: "5-8 циклов", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Приветствие солнцу - классическая последовательность йоги. Плавные переходы между позами. Синхронизируйте движения с дыханием. Каждый цикл занимает около 2-3 минут.",
+                        gifUrl: "yoga_sun_salutation.gif"
+                    },
+                    { 
+                        name: "Растяжка груди и плеч", 
+                        category: "Гибкость", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 30,
+                        instruction: "Встаньте в дверном проеме, упритесь предплечьями в косяки. Шагните вперед, растягивая грудные мышцы. Различные углы рук для разных частей груди.",
+                        gifUrl: "stretch_chest.gif"
+                    },
+                    { 
+                        name: "Растяжка спины и позвоночника", 
+                        category: "Гибкость", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 30,
+                        instruction: "Поза ребенка, скручивания позвоночника лежа, наклоны вперед сидя. Мягкие, плавные движения. Дышите глубоко и расслабленно.",
+                        gifUrl: "stretch_back.gif"
+                    },
+                    { 
+                        name: "Растяжка ног и бедер", 
+                        category: "Гибкость", 
+                        sets: 3, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 30,
+                        instruction: "Растяжка квадрицепсов, задней поверхности бедра, икроножных мышц, тазобедренных суставов. Удерживайте каждую позу 30-60 секунд.",
+                        gifUrl: "stretch_legs.gif"
+                    },
+                    { 
+                        name: "Пенный ролик (самомассаж)", 
+                        category: "Восстановление", 
+                        sets: 1, 
+                        reps: "10-15 мин", 
+                        weight: "bodyweight", 
+                        rest: 0,
+                        instruction: "Используйте пенный ролик для всех основных мышечных групп. Медленные перекатывания. Задерживайтесь на болезненных точках 30-60 секунд.",
+                        gifUrl: "recovery_foam_rolling.gif"
+                    },
+                    { 
+                        name: "Дыхательная гимнастика", 
+                        category: "Восстановление", 
+                        sets: 3, 
+                        reps: "5-10 циклов", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Диафрагмальное дыхание: вдох на 4 счета, задержка на 4, выдох на 6-8 счетов. Сосредоточьтесь на расслаблении и восстановлении.",
+                        gifUrl: "recovery_breathing.gif"
+                    },
+                    { 
+                        name: "Медитация/Расслабление", 
+                        category: "Ментальное", 
+                        sets: 1, 
+                        reps: "10-20 мин", 
+                        weight: "bodyweight", 
+                        rest: 0,
+                        instruction: "Сядьте или лягте удобно. Закройте глаза. Сосредоточьтесь на дыхании или используйте техники визуализации. Полное расслабление всех мышц тела.",
+                        gifUrl: "recovery_meditation.gif"
+                    },
+                    { 
+                        name: "Легкие скручивания", 
+                        category: "Пресс", 
+                        sets: 3, 
+                        reps: "15-20", 
+                        weight: "bodyweight", 
+                        rest: 45,
+                        instruction: "Медленные, контролируемые скручивания без резких движений. Сосредоточьтесь на качестве движения, а не на интенсивности.",
+                        gifUrl: "abs_light_crunches.gif"
+                    },
+                    { 
+                        name: "Статическая планка", 
+                        category: "Пресс", 
+                        sets: 2, 
+                        reps: "30-60 сек", 
+                        weight: "bodyweight", 
+                        rest: 60,
+                        instruction: "Легкая планка с акцентом на дыхание и контроль. Не напрягайтесь чрезмерно. Восстановительный характер упражнения.",
+                        gifUrl: "abs_static_plank.gif"
+                    },
+                    { 
+                        name: "Растяжка мышц кора", 
+                        category: "Гибкость", 
+                        sets: 2, 
+                        reps: "30-45 сек", 
+                        weight: "bodyweight", 
+                        rest: 30,
+                        instruction: "Поза кобры, прогибы назад стоя, боковые наклоны. Растягивайте мышцы живота и косые мышцы. Завершение тренировочной недели.",
+                        gifUrl: "stretch_core.gif"
+                    }
+                ]
+            }
+        };
+
+        // Переключение вкладок
+        function switchTab(tabName) {
+            // Убираем активный класс со всех навигационных элементов
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Скрываем все секции
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Активируем нужную навигацию и секцию
+            event.target.closest('.nav-item').classList.add('active');
+            document.getElementById(tabName + 'Section').classList.add('active');
+            
+            currentTab = tabName;
+            
+            // Обновляем данные при переходе на прогресс
+            if (tabName === 'progress') {
+                updateProgressStats();
+            } else if (tabName === 'settings') {
+                loadSettings();
+            }
+        }
+
+        // Запуск тренировки
+        function startWorkout(dayNumber) {
+            console.log(`Запуск тренировки день ${dayNumber}`);
+            
+            currentWorkout = workoutPrograms[dayNumber];
+            currentExerciseIndex = 0;
+            exerciseSets = {};
+            workoutSeconds = 0;
+            
+            if (!currentWorkout) {
+                alert('Тренировка не найдена!');
+                return;
+            }
+
+            // Сбрасываем счетчики подходов
+            currentWorkout.exercises.forEach((_, index) => {
+                exerciseSets[index] = 0;
+            });
+
+            document.getElementById('workoutModalTitle').textContent = currentWorkout.name;
+            renderExerciseList();
+            updateWorkoutProgress();
+            document.getElementById('workoutModal').style.display = 'block';
+            
+            // Автостарт таймера
+            if (!isWorkoutTimerRunning) {
+                toggleWorkoutTimer();
+            }
+        }
+
+        // Отрисовка списка упражнений
+        function renderExerciseList() {
+            const container = document.getElementById('exerciseList');
+            let html = '';
+            
+            currentWorkout.exercises.forEach((exercise, index) => {
+                const weight = calculateWeight(exercise.weight);
+                const isCompleted = exerciseSets[index] >= exercise.sets;
+                const isCurrent = index === currentExerciseIndex && !isCompleted;
+                
+                html += `
+                    <div class="exercise-item ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}" id="exercise-${index}">
+                        <div class="exercise-header">
+                            <div class="exercise-info">
+                                <h4 class="exercise-name">${exercise.name}</h4>
+                                <div class="exercise-category">${exercise.category}</div>
+                            </div>
+                            <div class="exercise-number">${index + 1}</div>
+                        </div>
+                        <div class="exercise-details">
+                            <div class="exercise-detail">
+                                <div class="detail-value">${weight}</div>
+                                <div class="detail-label">${weight === 'собств. вес' ? 'Нагрузка' : 'Вес (кг)'}</div>
+                            </div>
+                            <div class="exercise-detail">
+                                <div class="detail-value">${exercise.reps}</div>
+                                <div class="detail-label">Повторения</div>
+                            </div>
+                            <div class="exercise-detail">
+                                <div class="detail-value">${exercise.rest}с</div>
+                                <div class="detail-label">Отдых</div>
+                            </div>
+                        </div>
+                        <div class="exercise-progress">
+                            <span class="progress-text">Подходы выполнено</span>
+                            <span class="progress-sets">${exerciseSets[index] || 0}/${exercise.sets}</span>
+                        </div>
+                        <div class="exercise-actions">
+                            <button class="btn btn-secondary btn-exercise" onclick="showExerciseInstruction(${index})">
+                                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="currentColor"/>
+                                </svg>
+                                Инструкция
+                            </button>
+                            <button class="btn btn-primary btn-exercise" onclick="completeSet(${index})" ${isCompleted ? 'disabled' : ''}>
+                                ${isCompleted ? 'Выполнено' : 'Завершить подход'}
+                            </button>
+                            ${!isCompleted && isCurrent ? `<button class="btn btn-secondary btn-exercise" onclick="skipExercise(${index})">Пропустить</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Расчет веса
+        function calculateWeight(weightFormula) {
+            const userWeight = parseFloat(localStorage.getItem('userWeight') || '71');
+            
+            if (weightFormula === 'bodyweight') {
+                return roundToStandardWeight(userWeight);
+            }
+            
+            if (weightFormula.includes('bodyweight')) {
+                const multiplier = parseFloat(weightFormula.split(' * ')[1]);
+                const calculatedWeight = userWeight * multiplier;
+                return roundToStandardWeight(calculatedWeight);
+            }
+            
+            return weightFormula;
+        }
+
+        // Профессиональное округление весов до стандартных значений
+        function roundToStandardWeight(weight) {
+            // Стандартные веса в спортзале (кг)
+            // Соответствуют реальным блинам и гантелям в фитнес-центрах
+            const standardWeights = [
+                // Легкие веса (гантели)
+                2.5, 5, 7.5, 10, 12.5, 15, 17.5,
+                // Средние веса (штанги с блинами по 2.5кг)
+                20, 22.5, 25, 27.5, 30, 32.5, 35, 37.5,
+                // Тяжелые веса (стандартные блины 5, 10, 15, 20кг)
+                40, 42.5, 45, 47.5, 50, 52.5, 55, 57.5,
+                // Очень тяжелые веса (для продвинутых атлетов)
+                60, 62.5, 65, 67.5, 70, 72.5, 75, 77.5,
+                80, 82.5, 85, 87.5, 90, 92.5, 95, 97.5,
+                // Максимальные веса (пауэрлифтинг)
+                100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150
+            ];
+            
+            // Находим ближайший стандартный вес
+            let closestWeight = standardWeights[0];
+            let minDifference = Math.abs(weight - closestWeight);
+            
+            for (let i = 1; i < standardWeights.length; i++) {
+                const difference = Math.abs(weight - standardWeights[i]);
+                if (difference < minDifference) {
+                    minDifference = difference;
+                    closestWeight = standardWeights[i];
+                }
+            }
+            
+            // Если вес меньше 2.5 кг, возвращаем собственный вес
+            // Это логично для упражнений типа планки, отжиманий, подтягиваний
+            if (weight < 2.5) {
+                return 'собств. вес';
+            }
+            
+            return closestWeight.toString();
+        }
+
+        // Расчет общего времени тренировки
+        function calculateWorkoutDuration(workout) {
+            let totalMinutes = 0;
+            
+            // Время разминки (всегда 10 минут)
+            totalMinutes += 10;
+            
+            workout.exercises.forEach(exercise => {
+                // Время на выполнение упражнения
+                let exerciseTime = 0;
+                
+                if (exercise.reps.includes('сек') || exercise.reps.includes('мин')) {
+                    // Если время указано в секундах/минутах
+                    if (exercise.reps.includes('мин')) {
+                        const minutes = parseFloat(exercise.reps.match(/(\d+(?:\.\d+)?)/)[0]);
+                        exerciseTime = minutes * exercise.sets;
+                    } else {
+                        const seconds = parseFloat(exercise.reps.match(/(\d+(?:\.\d+)?)/)[0]);
+                        exerciseTime = (seconds / 60) * exercise.sets;
+                    }
+                } else {
+                    // Обычные повторения (примерно 2-3 секунды на повторение)
+                    const avgReps = exercise.reps.includes('-') ? 
+                        (parseInt(exercise.reps.split('-')[0]) + parseInt(exercise.reps.split('-')[1])) / 2 :
+                        parseInt(exercise.reps);
+                    
+                    exerciseTime = (avgReps * 2.5 / 60) * exercise.sets; // 2.5 сек на повторение
+                }
+                
+                // Время отдыха между подходами
+                const restTime = (exercise.rest / 60) * (exercise.sets - 1);
+                
+                totalMinutes += exerciseTime + restTime;
+            });
+            
+            // Время заминки/растяжки (5-10 минут)
+            totalMinutes += 8;
+            
+            return Math.round(totalMinutes);
+        }
+
+        // Форматирование времени для отображения
+        function formatWorkoutTime(minutes) {
+            if (minutes >= 60) {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return mins > 0 ? `${hours}ч ${mins}мин` : `${hours}ч`;
+            }
+            return `${minutes}мин`;
+        }
+
+        // Получение статуса времени тренировки
+        function getWorkoutTimeStatus(minutes) {
+            if (minutes <= 90) {
+                return { status: 'optimal', color: 'var(--success)', text: 'Оптимально' };
+            } else if (minutes <= 105) {
+                return { status: 'warning', color: 'var(--warning)', text: 'Немного длинно' };
+            } else {
+                return { status: 'danger', color: 'var(--danger)', text: 'Слишком долго' };
+            }
+        }
+
+        // Выполнение подхода
+        function completeSet(exerciseIndex) {
+            if (!exerciseSets[exerciseIndex]) {
+                exerciseSets[exerciseIndex] = 0;
+            }
+            
+            exerciseSets[exerciseIndex]++;
+            const exercise = currentWorkout.exercises[exerciseIndex];
+            
+            // Если подходы выполнены, переходим к следующему упражнению
+            if (exerciseSets[exerciseIndex] >= exercise.sets) {
+                setTimeout(() => {
+                    nextExercise();
+                }, 500);
+            } else {
+                // Запускаем таймер отдыха
+                startRestTimer(exercise.rest);
+            }
+            
+            renderExerciseList();
+            updateWorkoutProgress();
+        }
+
+        // Пропуск упражнения
+        function skipExercise(exerciseIndex) {
+            exerciseSets[exerciseIndex] = currentWorkout.exercises[exerciseIndex].sets;
+            setTimeout(() => {
+                nextExercise();
+            }, 200);
+            renderExerciseList();
+            updateWorkoutProgress();
+        }
+
+        // Показать инструкцию упражнения
+        function showExerciseInstruction(exerciseIndex) {
+            const exercise = currentWorkout.exercises[exerciseIndex];
+            const modal = document.getElementById('exerciseInstructionModal');
+            const gifContainer = document.querySelector('.exercise-gif-container');
+            const gifLoader = document.getElementById('gifLoader');
+            const exerciseGif = document.getElementById('exerciseGif');
+            const gifError = document.getElementById('gifError');
+            
+            // Заполняем данные модального окна
+            document.getElementById('modalExerciseName').textContent = exercise.name;
+            document.getElementById('exerciseInstructionText').textContent = exercise.instruction || 'Инструкция для этого упражнения пока недоступна.';
+            document.getElementById('modalSets').textContent = exercise.sets;
+            document.getElementById('modalReps').textContent = exercise.reps;
+            document.getElementById('modalRest').textContent = exercise.rest + 'с';
+            
+            // Умное отображение веса
+            const weight = calculateWeight(exercise.weight);
+            if (weight === 'собств. вес') {
+                document.getElementById('modalWeight').textContent = weight;
+            } else {
+                document.getElementById('modalWeight').textContent = weight + ' кг';
+            }
+            
+            // Сбрасываем состояние GIF
+            gifLoader.style.display = 'flex';
+            exerciseGif.style.display = 'none';
+            gifError.style.display = 'none';
+            
+            // Пытаемся загрузить GIF
+            if (exercise.gifUrl) {
+                const gifSources = [
+                    `https://fitnessgifs.s3.amazonaws.com/${exercise.gifUrl}`,
+                    `https://cdn.exercise.com/gifs/${exercise.gifUrl}`,
+                    `https://api.exercisedb.io/image/${exercise.gifUrl}`,
+                    `./assets/gifs/${exercise.gifUrl}`,
+                    `https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${exercise.gifUrl}`
+                ];
+                
+                tryLoadGif(gifSources, 0, exerciseGif, gifLoader, gifError);
+            } else {
+                // Если нет URL для GIF
+                gifLoader.style.display = 'none';
+                gifError.style.display = 'flex';
+            }
+            
+            // Показываем модальное окно
+            modal.classList.add('active');
+            
+            // Сохраняем индекс для кнопки "Начать упражнение"
+            modal.dataset.exerciseIndex = exerciseIndex;
+        }
+
+        // Рекурсивная попытка загрузки GIF из разных источников
+        function tryLoadGif(sources, index, gifElement, loader, errorElement) {
+            if (index >= sources.length) {
+                // Все источники испробованы, показываем ошибку
+                loader.style.display = 'none';
+                errorElement.style.display = 'flex';
+                return;
+            }
+            
+            const img = new Image();
+            img.onload = function() {
+                // GIF успешно загружен
+                gifElement.src = sources[index];
+                loader.style.display = 'none';
+                gifElement.style.display = 'block';
+            };
+            
+            img.onerror = function() {
+                // Ошибка загрузки, пробуем следующий источник
+                tryLoadGif(sources, index + 1, gifElement, loader, errorElement);
+            };
+            
+            // Timeout для медленных соединений
+            setTimeout(() => {
+                if (gifElement.style.display === 'none') {
+                    img.onerror();
+                }
+            }, 5000);
+            
+            img.src = sources[index];
+        }
+
+        // Закрытие модального окна инструкций
+        function closeExerciseModal() {
+            const modal = document.getElementById('exerciseInstructionModal');
+            modal.classList.remove('active');
+        }
+
+        // Начать упражнение из модального окна
+        function startExerciseFromModal() {
+            const modal = document.getElementById('exerciseInstructionModal');
+            const exerciseIndex = parseInt(modal.dataset.exerciseIndex);
+            
+            // Переключаемся на нужное упражнение
+            currentExerciseIndex = exerciseIndex;
+            
+            // Закрываем модальное окно
+            closeExerciseModal();
+            
+            // Обновляем отображение
+            renderExerciseList();
+            updateWorkoutProgress();
+            
+            // Прокручиваем к текущему упражнению
+            setTimeout(() => {
+                const exerciseElement = document.getElementById(`exercise-${exerciseIndex}`);
+                if (exerciseElement) {
+                    exerciseElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+
+        // Закрытие модального окна по клику на фон
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('exerciseInstructionModal');
+            if (e.target === modal) {
+                closeExerciseModal();
+            }
+        });
+
+        // Переход к следующему упражнению
+        function nextExercise() {
+            currentExerciseIndex++;
+            
+            if (currentExerciseIndex >= currentWorkout.exercises.length) {
+                // Тренировка завершена
+                finishWorkout();
+                return;
+            }
+            
+            renderExerciseList();
+            updateWorkoutProgress();
+            
+            // Прокручиваем к текущему упражнению
+            const currentElement = document.getElementById(`exercise-${currentExerciseIndex}`);
+            if (currentElement) {
+                currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Обновление прогресса тренировки
+        function updateWorkoutProgress() {
+            const totalExercises = currentWorkout.exercises.length;
+            let completedExercises = 0;
+            
+            currentWorkout.exercises.forEach((exercise, index) => {
+                if (exerciseSets[index] >= exercise.sets) {
+                    completedExercises++;
+                }
+            });
+            
+            const progress = Math.round((completedExercises / totalExercises) * 100);
+            
+            document.getElementById('workoutProgress').textContent = `${progress}%`;
+            document.getElementById('workoutProgressFill').style.width = `${progress}%`;
+            
+            // Обновляем информацию о времени
+            updateWorkoutTimeInfo();
+        }
+
+        // Обновление информации о времени тренировки
+        function updateWorkoutTimeInfo() {
+            if (!currentWorkout) return;
+            
+            const plannedDuration = calculateWorkoutDuration(currentWorkout);
+            const currentMinutes = Math.floor(workoutSeconds / 60);
+            const remainingMinutes = Math.max(0, plannedDuration - currentMinutes);
+            
+            // Обновляем планируемое время
+            document.getElementById('plannedTime').textContent = formatWorkoutTime(plannedDuration);
+            
+            // Обновляем оставшееся время
+            const remainingTimeElement = document.getElementById('remainingTime');
+            if (remainingMinutes > 0) {
+                remainingTimeElement.textContent = formatWorkoutTime(remainingMinutes);
+                remainingTimeElement.style.color = remainingMinutes <= 10 ? 'var(--warning)' : 'var(--text-primary)';
+            } else {
+                remainingTimeElement.textContent = '+' + formatWorkoutTime(currentMinutes - plannedDuration);
+                remainingTimeElement.style.color = 'var(--danger)';
+            }
+        }
+
+        // Таймер тренировки
+        function toggleWorkoutTimer() {
+            const iconElement = document.getElementById('timerIcon');
+            
+            if (isWorkoutTimerRunning) {
+                clearInterval(workoutTimer);
+                isWorkoutTimerRunning = false;
+                iconElement.innerHTML = '<path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>';
+            } else {
+                workoutTimer = setInterval(() => {
+                    workoutSeconds++;
+                    updateWorkoutTimerDisplay();
+                }, 1000);
+                isWorkoutTimerRunning = true;
+                iconElement.innerHTML = '<path d="M14,19H18V5H14M6,19H10V5H6V19Z"/>';
+            }
+        }
+
+        function updateWorkoutTimerDisplay() {
+            workoutSeconds++;
+            const minutes = Math.floor(workoutSeconds / 60);
+            const seconds = workoutSeconds % 60;
+            document.getElementById('workoutTimerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Обновляем информацию о времени тренировки
+            updateWorkoutTimeInfo();
+        }
+
+        // Таймер отдыха
+        function startRestTimer(seconds) {
+            restSeconds = seconds;
+            document.getElementById('restTimerDisplay').textContent = restSeconds;
+            document.getElementById('restTimerModal').style.display = 'block';
+            
+            restTimer = setInterval(() => {
+                restSeconds--;
+                document.getElementById('restTimerDisplay').textContent = restSeconds;
+                
+                if (restSeconds <= 0) {
+                    clearInterval(restTimer);
+                    document.getElementById('restTimerModal').style.display = 'none';
+                    
+                    // Вибрация если поддерживается
+                    if (navigator.vibrate) {
+                        navigator.vibrate([200, 100, 200]);
+                    }
+                }
+            }, 1000);
+        }
+
+        function skipRest() {
+            clearInterval(restTimer);
+            document.getElementById('restTimerModal').style.display = 'none';
+        }
+
+        function addRestTime() {
+            restSeconds += 30;
+            document.getElementById('restTimerDisplay').textContent = restSeconds;
+        }
+
+        // Завершение тренировки
+        function finishWorkout() {
+            // Останавливаем таймеры
+            if (workoutTimer) {
+                clearInterval(workoutTimer);
+                workoutTimer = null;
+            }
+            if (restTimer) {
+                clearInterval(restTimer);
+                restTimer = null;
+            }
+            
+            // Сохраняем статистику
+            const stats = JSON.parse(localStorage.getItem('workoutStats') || '{}');
+            const now = new Date();
+            
+            stats.totalWorkouts = (stats.totalWorkouts || 0) + 1;
+            stats.totalTime = (stats.totalTime || 0) + Math.floor(workoutSeconds / 60);
+            stats.lastWorkout = now.toISOString().split('T')[0];
+            
+            // Подсчет тренировок за сегодня и неделю
+            const today = now.toISOString().split('T')[0];
+            if (!stats.dailyWorkouts) stats.dailyWorkouts = {};
+            stats.dailyWorkouts[today] = (stats.dailyWorkouts[today] || 0) + 1;
+            
+            // Расчет серии дней
+            let currentStreak = 0;
+            let checkDate = new Date(now);
+            while (true) {
+                const dateString = checkDate.toISOString().split('T')[0];
+                if (stats.dailyWorkouts && stats.dailyWorkouts[dateString] && stats.dailyWorkouts[dateString] > 0) {
+                    currentStreak++;
+                    checkDate.setDate(checkDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+            stats.currentStreak = currentStreak;
+            
+            localStorage.setItem('workoutStats', JSON.stringify(stats));
+            
+            // Сохраняем в историю
+            const history = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+            history.unshift({
+                name: currentWorkout.name,
+                date: now.toLocaleString('en-GB'),
+                duration: Math.floor(workoutSeconds / 60),
+                exercises: currentWorkout.exercises.length,
+                completedExercises: Object.keys(exerciseSets).length
+            });
+            
+            if (history.length > 50) {
+                history.splice(50);
+            }
+            
+            localStorage.setItem('workoutHistory', JSON.stringify(history));
+            
+            // Закрываем модал
+            document.getElementById('workoutModal').style.display = 'none';
+            document.getElementById('restTimerModal').style.display = 'none';
+            
+            // Обновляем статистику
+            updateQuickStats();
+            updateProgressStats();
+            
+            // Уведомление
+            alert('Отличная тренировка! Прогресс успешно сохранен.');
+            
+            // Сбрасываем состояние
+            currentWorkout = null;
+            currentExerciseIndex = 0;
+            exerciseSets = {};
+            workoutSeconds = 0;
+            isWorkoutTimerRunning = false;
+        }
+
+        // Закрытие тренировки
+        function closeWorkout() {
+            if (confirm('Завершить тренировку? Ваш прогресс будет сохранен.')) {
+                finishWorkout();
+            }
+        }
+
+        // Быстрая статистика
+        function updateQuickStats() {
+            const stats = JSON.parse(localStorage.getItem('workoutStats') || '{}');
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            
+            // Сегодня
+            const todayWorkouts = (stats.dailyWorkouts && stats.dailyWorkouts[today]) || 0;
+            document.getElementById('todayWorkouts').textContent = todayWorkouts;
+            
+            // На неделе
+            let weekWorkouts = 0;
+            if (stats.dailyWorkouts) {
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                Object.entries(stats.dailyWorkouts).forEach(([date, count]) => {
+                    if (new Date(date) >= weekAgo) {
+                        weekWorkouts += count;
+                    }
+                });
+            }
+            document.getElementById('weekWorkouts').textContent = weekWorkouts;
+            
+            // Всего
+            document.getElementById('totalWorkouts').textContent = stats.totalWorkouts || 0;
+            
+            // Серия
+            document.getElementById('streakDays').textContent = stats.currentStreak || 0;
+        }
+
+        // Детальная статистика прогресса
+        function updateProgressStats() {
+            const stats = JSON.parse(localStorage.getItem('workoutStats') || '{}');
+            
+            document.getElementById('totalWorkoutsDetail').textContent = stats.totalWorkouts || 0;
+            document.getElementById('totalTimeDetail').textContent = stats.totalTime || 0;
+            
+            const avgDuration = stats.totalWorkouts > 0 ? 
+                Math.round(stats.totalTime / stats.totalWorkouts) : 0;
+            document.getElementById('avgDurationDetail').textContent = avgDuration;
+            
+            const lastWorkout = stats.lastWorkout || '-';
+            if (lastWorkout !== '-') {
+                const date = new Date(lastWorkout);
+                document.getElementById('lastWorkoutDetail').textContent = date.toLocaleDateString('en-GB');
+            } else {
+                document.getElementById('lastWorkoutDetail').textContent = '-';
+            }
+        }
+
+        // Загрузка настроек
+        function loadSettings() {
+            document.getElementById('heightInput').value = localStorage.getItem('userHeight') || '180';
+            document.getElementById('weightInput').value = localStorage.getItem('userWeight') || '71';
+            document.getElementById('goalSelect').value = localStorage.getItem('userGoal') || 'muscle';
+            document.getElementById('levelSelect').value = localStorage.getItem('userLevel') || 'intermediate';
+            document.getElementById('restTimeInput').value = localStorage.getItem('restTime') || '60';
+        }
+
+        // Сохранение настроек
+        function saveSettings() {
+            localStorage.setItem('userHeight', document.getElementById('heightInput').value);
+            localStorage.setItem('userWeight', document.getElementById('weightInput').value);
+            localStorage.setItem('userGoal', document.getElementById('goalSelect').value);
+            localStorage.setItem('userLevel', document.getElementById('levelSelect').value);
+            localStorage.setItem('restTime', document.getElementById('restTimeInput').value);
+            
+            alert('Настройки успешно сохранены!');
+            updateQuickStats();
+        }
+
+        // Закрытие модалов при клике вне области
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal') || event.target.classList.contains('rest-timer-modal')) {
+                if (event.target.id === 'restTimerModal') {
+                    skipRest();
+                } else if (event.target.id === 'workoutModal') {
+                    // Не закрываем модал тренировки случайно
+                    return;
+                } else if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            }
+        }
+
+        // Генерация карточек программ тренировок
+        function renderWorkoutCards() {
+            const workoutGrid = document.getElementById('workoutGrid');
+            if (!workoutGrid) return;
+            
+            let html = '';
+            
+            Object.entries(workoutPrograms).forEach(([id, workout]) => {
+                const duration = calculateWorkoutDuration(workout);
+                const timeStatus = getWorkoutTimeStatus(duration);
+                const exerciseCount = workout.exercises.length;
+                
+                // Определяем иконку в зависимости от программы
+                const getWorkoutIcon = (id) => {
+                    const icons = {
+                        1: `<path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>`, // Грудь
+                        2: `<path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>`, // Спина
+                        3: `<path d="M7.5,4A5.5,5.5 0 0,0 2,9.5L12,20L22,9.5A5.5,5.5 0 0,0 16.5,4C14.64,4 13.04,4.92 12,6.34C10.96,4.92 9.36,4 7.5,4V4Z"/>`, // Ноги
+                        4: `<path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z"/>`, // Плечи
+                        5: `<path d="M19,17H5V7H19M19,5H5A2,2 0 0,0 3,7V17A2,2 0 0,0 5,19H19A2,2 0 0,0 21,17V7A2,2 0 0,0 19,5M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/>`, // Руки
+                        6: `<path d="M3.5,18.49L9,13L13,17L20.5,9.5L22,11L13,20L9,16L2,23L3.5,18.49M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5Z"/>`, // Функциональная
+                        7: `<path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3Z"/>` // Восстановление
+                    };
+                    return icons[id] || icons[1];
+                };
+                
+                html += `
+                    <div class="workout-card" onclick="startWorkout(${id})">
+                        <div class="workout-header">
+                            <div class="workout-info">
+                                <h3 class="workout-title">${workout.name}</h3>
+                                <div class="workout-category">${workout.category}</div>
+                            </div>
+                            <div class="workout-icon">
+                                <svg class="icon-lg" viewBox="0 0 24 24" fill="white">
+                                    ${getWorkoutIcon(id)}
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="workout-description">${workout.description}</p>
+                        <div class="workout-stats">
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M9,4V7L12,8V5C13.66,5 15,6.34 15,8V16C15,17.66 13.66,19 12,19S9,17.66 9,16V12H7V16A5,5 0 0,0 12,21A5,5 0 0,0 17,16V8A5,5 0 0,0 12,3C10.34,3 9,4.34 9,6V8L12,9V6C12,5.45 12.45,5 13,5S14,5.45 14,6V7L12,8V5Z"/>
+                                </svg>
+                                <span>${exerciseCount} упражнений</span>
+                            </div>
+                            <div class="workout-stat">
+                                <svg class="icon-sm" viewBox="0 0 24 24">
+                                    <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                </svg>
+                                <span style="color: ${timeStatus.color};">${formatWorkoutTime(duration)}</span>
+                            </div>
+                        </div>
+                        <div class="workout-time-status" style="color: ${timeStatus.color}; font-size: 12px; font-weight: 600; text-align: center; margin-top: 8px;">
+                            ${timeStatus.text}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            workoutGrid.innerHTML = html;
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            renderWorkoutCards();
+            updateQuickStats();
+            updateProgressStats();
+            loadSettings();
+            console.log('ФитПро Профессионал полностью загружен');
+        });
+    </script>
+
+    <!-- Модальное окно инструкций упражнений -->
+    <div id="exerciseInstructionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalExerciseName">Название упражнения</h3>
+                <button class="modal-close" onclick="closeExerciseModal()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="exercise-gif-container">
+                    <div id="gifLoader" class="gif-loader">
+                        <div class="loader-spinner"></div>
+                        <p>Загрузка демонстрации...</p>
+                    </div>
+                    <img id="exerciseGif" class="exercise-gif" alt="Демонстрация упражнения" style="display: none;">
+                    <div id="gifError" class="gif-error" style="display: none;">
+                        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p>Демонстрация недоступна</p>
+                    </div>
+                </div>
+                <div class="exercise-instruction">
+                    <h4>Техника выполнения:</h4>
+                    <p id="exerciseInstructionText">Инструкция загружается...</p>
+                </div>
+                <div class="exercise-params">
+                    <div class="param-grid">
+                        <div class="param-item">
+                            <span class="param-label">Подходы:</span>
+                            <span class="param-value" id="modalSets">-</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Повторения:</span>
+                            <span class="param-value" id="modalReps">-</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Отдых:</span>
+                            <span class="param-value" id="modalRest">-</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Вес:</span>
+                            <span class="param-value" id="modalWeight">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeExerciseModal()">Закрыть</button>
+                <button class="btn btn-primary" onclick="startExerciseFromModal()">Начать упражнение</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
