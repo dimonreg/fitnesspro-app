@@ -1396,6 +1396,18 @@
             border-color: var(--accent);
             background: rgba(16, 185, 129, 0.1);
         }
+        .achievement-card.shame-earned {
+            border-color: #EF4444 !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+            animation: shameGlow 2s ease-in-out infinite;
+        }
+        @keyframes shameGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); }
+        }
+        .shame-achievement .achievement-icon-wrapper {
+            background: rgba(239, 68, 68, 0.1);
+        }
         .achievement-card.locked {
             opacity: 0.6;
         }
@@ -2136,6 +2148,337 @@
                 transform: translateY(0);
             }
         }
+
+        /* ===== КНОПКИ УПРАВЛЕНИЯ УПРАЖНЕНИЕМ ===== */
+        .exercise-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .btn-skip-set {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 2px solid var(--warning);
+            border-radius: 10px;
+            color: var(--warning);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-skip-set:hover {
+            background: var(--warning);
+            color: white;
+        }
+        .btn-replace-exercise {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 2px solid var(--info);
+            border-radius: 10px;
+            color: var(--info);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-replace-exercise:hover {
+            background: var(--info);
+            color: white;
+        }
+
+        /* ===== ТАЙМЕР ДЛЯ УПРАЖНЕНИЙ НА ВРЕМЯ ===== */
+        .exercise-timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.05));
+            border-radius: 16px;
+            margin-bottom: 14px;
+        }
+        .exercise-timer-display {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+        .exercise-timer-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .exercise-timer-controls {
+            display: flex;
+            gap: 12px;
+        }
+        .timer-control-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            border: none;
+        }
+        .timer-start-btn {
+            background: var(--accent);
+            color: white;
+        }
+        .timer-stop-btn {
+            background: var(--danger);
+            color: white;
+        }
+        .timer-reset-btn {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ЗАМЕНЫ УПРАЖНЕНИЯ ===== */
+        .replace-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .replace-modal.active { display: flex; }
+        .replace-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--bg-card);
+            margin-bottom: 16px;
+        }
+        .replace-modal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .replace-modal-close {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border: none;
+            border-radius: 10px;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .replace-exercises-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .replace-exercise-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .replace-exercise-item:hover {
+            border-color: var(--accent);
+        }
+        .replace-exercise-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+        .replace-exercise-info { flex: 1; }
+        .replace-exercise-name { font-weight: 600; margin-bottom: 2px; }
+        .replace-exercise-meta { font-size: 13px; color: var(--text-secondary); }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ВЫБОРА АВАТАРА ===== */
+        .avatar-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .avatar-modal.active { display: flex; }
+        .avatar-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            margin-bottom: 16px;
+        }
+        .avatar-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .avatar-option {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-option:hover {
+            border-color: var(--bg-card);
+        }
+        .avatar-option.selected {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .avatar-option img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        .avatar-option-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .avatar-option-level {
+            font-size: 11px;
+            color: var(--accent);
+            margin-top: 2px;
+        }
+        .avatar-save-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ===== АНТИНАГРАДЫ (ПОЗОРНЫЕ МЕДАЛИ) ===== */
+        .shame-achievement-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border: 2px solid var(--danger);
+        }
+        .shame-achievement-card .achievement-icon-wrapper {
+            background: linear-gradient(135deg, var(--danger), #B91C1C) !important;
+        }
+        .shame-section-title {
+            color: var(--danger);
+        }
+        .shame-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 3px solid var(--danger);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            max-width: 320px;
+        }
+        .shame-popup.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .shame-popup-icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+        .shame-popup-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 8px;
+        }
+        .shame-popup-message {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .shame-popup-close {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .shame-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ===== УЛУЧШЕННАЯ АНАЛИТИКА ===== */
+        .analytics-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .analytics-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .analytics-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .analytics-breakdown {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
@@ -2232,6 +2575,37 @@
         <div class="achievement-icon" id="achievementIcon"></div>
         <div class="achievement-title" id="achievementTitle">Достижение!</div>
         <div class="achievement-desc" id="achievementDesc">Описание</div>
+    </div>
+
+    <!-- ПОПАП ПОЗОРА (АНТИНАГРАДА) -->
+    <div class="shame-popup" id="shamePopup">
+        <div class="shame-popup-icon" id="shamePopupIcon">😭</div>
+        <div class="shame-popup-title" id="shamePopupTitle">Медаль позора!</div>
+        <div class="shame-popup-message" id="shamePopupMessage">Сообщение</div>
+        <button class="shame-popup-close" id="btnShameClose">Принять позор</button>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ЗАМЕНЫ УПРАЖНЕНИЯ -->
+    <div class="replace-modal" id="replaceModal">
+        <div class="replace-modal-header">
+            <h3 class="replace-modal-title">Заменить упражнение</h3>
+            <button class="replace-modal-close" id="btnCloseReplace">&times;</button>
+        </div>
+        <div class="replace-exercises-list" id="replaceExercisesList">
+            <!-- Заполняется динамически -->
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ВЫБОРА АВАТАРА -->
+    <div class="avatar-modal" id="avatarModal">
+        <div class="avatar-modal-header">
+            <h3 class="avatar-modal-title">Выберите аватар</h3>
+            <button class="replace-modal-close" id="btnCloseAvatar">&times;</button>
+        </div>
+        <div class="avatar-grid" id="avatarGrid">
+            <!-- Заполняется динамически -->
+        </div>
+        <button class="avatar-save-btn" id="btnSaveAvatar">Сохранить</button>
     </div>
 
     <!-- ЭКРАН ВХОДА -->
@@ -2427,6 +2801,14 @@
                         <div class="settings-value" id="settingsBodyWeightValue">70 кг</div>
                     </div>
                     <div class="settings-arrow" id="arrowBodyWeight"></div>
+                </div>
+                <div class="settings-item" id="settingsAvatar">
+                    <div class="settings-icon" id="iconAvatar"></div>
+                    <div class="settings-text">
+                        <div class="settings-label">Аватар</div>
+                        <div class="settings-value" id="settingsAvatarValue">Выбрать аватар</div>
+                    </div>
+                    <div class="settings-arrow" id="arrowAvatar"></div>
                 </div>
                 <div class="settings-item" id="settingsRestTime">
                     <div class="settings-icon" id="iconSettingsTimer"></div>
@@ -2713,6 +3095,8 @@ const ICONS = {
     
     lock: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>',
     
+    alert: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    
     // Списки
     list: '<svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
     history: '<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>',
@@ -2799,78 +3183,73 @@ const CONFIG = {
     },
 
     EXERCISES: {
-        // РАЗМИНКА - специфичная для каждой группы мышц
+        // РАЗМИНКА - кардио на тренажёрах (универсальная для всех групп мышц)
         warmup_chest: [
-            { id: 'warmup_arm_circles', name: 'Круговые вращения руками', sets: 2, reps: '20 вперёд + 20 назад', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/arm_circles.gif', description: 'Встаньте прямо, руки в стороны. Выполняйте круговые движения руками — сначала вперёд, затем назад. Держите руки прямыми, движения контролируемые.' },
-            { id: 'warmup_chest_stretch', name: 'Динамическая растяжка груди', sets: 2, reps: '15', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/chest_stretch.gif', description: 'Встаньте прямо, руки перед грудью. Разводите руки в стороны, максимально раскрывая грудную клетку, затем возвращайте обратно. Чувствуйте растяжение в груди.' },
-            { id: 'warmup_pushups_light', name: 'Отжимания (разминочные)', sets: 2, reps: '10-12', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/pushups.gif', description: 'Примите упор лёжа, руки чуть шире плеч. Опускайтесь, сгибая локти, грудь почти касается пола. Поднимитесь обратно. Это разминочные отжимания — не до отказа.' }
+            { id: 'warmup_treadmill', name: 'Беговая дорожка', sets: 1, reps: '5 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Беговая дорожка.gif', description: 'Лёгкий бег или быстрая ходьба на беговой дорожке. Скорость 6-8 км/ч. Разогрейте мышцы и поднимите пульс до 110-130 уд/мин.' },
+            { id: 'warmup_rowing', name: 'Гребной тренажёр', sets: 1, reps: '3 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Гребной тренажёр.gif', description: 'Сядьте на гребной тренажёр, спина прямая. Отталкивайтесь ногами, затем тяните рукоятку к животу. Движение плавное, без рывков. Средний темп.' }
         ],
         warmup_back: [
-            { id: 'warmup_cat_cow', name: 'Кошка-корова', sets: 2, reps: '10', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/cat_cow.gif', description: 'Встаньте на четвереньки. На вдохе прогните спину вниз (корова), на выдохе округлите спину вверх (кошка). Движения плавные, растягивайте позвоночник.' },
-            { id: 'warmup_arm_swings', name: 'Махи руками', sets: 2, reps: '20', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/arm_swings.gif', description: 'Встаньте прямо, руки в стороны. Делайте махи руками крест-накрест перед грудью. Движения динамичные, разогревающие плечевой пояс.' },
-            { id: 'warmup_band_pull', name: 'Тяга резинки к груди', sets: 2, reps: '15', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/band_pull.gif', description: 'Возьмите резинку двумя руками на ширине плеч. Растягивайте её в стороны, сводя лопатки. Держите руки параллельно полу.' }
+            { id: 'warmup_rowing_back', name: 'Гребной тренажёр', sets: 1, reps: '5 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Гребной тренажёр.gif', description: 'Идеальная разминка для спины. Отталкивайтесь ногами, затем тяните рукоятку к животу, сводя лопатки. Разогревает всю заднюю цепь мышц.' },
+            { id: 'warmup_bike', name: 'Велотренажёр', sets: 1, reps: '3 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Велотренажёр.gif', description: 'Крутите педали в среднем темпе. Сопротивление минимальное. Держите спину прямой. Отлично разогревает ноги и поднимает пульс.' }
         ],
         warmup_shoulders: [
-            { id: 'warmup_shoulder_circles', name: 'Круговые вращения плечами', sets: 2, reps: '15 вперёд + 15 назад', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/shoulder_circles.gif', description: 'Встаньте прямо, руки вдоль тела. Поднимайте плечи вверх, отводите назад, опускайте вниз круговым движением. Затем в обратную сторону.' },
-            { id: 'warmup_wall_slides', name: 'Скольжение по стене', sets: 2, reps: '12', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/wall_slides.gif', description: 'Прижмитесь спиной к стене, руки согнуты под 90°. Скользите руками вверх и вниз по стене, сохраняя контакт. Отлично для мобильности плеч.' },
-            { id: 'warmup_band_dislocates', name: 'Прокручивание палки/резинки', sets: 2, reps: '10', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/band_dislocates.gif', description: 'Возьмите палку/резинку широким хватом. Прокрутите её над головой назад и вперёд, держа руки прямыми. Чем шире хват, тем легче.' }
+            { id: 'warmup_rowing_shoulders', name: 'Гребной тренажёр', sets: 1, reps: '4 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Гребной тренажёр.gif', description: 'Гребля отлично разогревает плечи и руки. Акцент на тягу руками. Движение плавное, контролируемое. Средний темп.' },
+            { id: 'warmup_treadmill_shoulders', name: 'Беговая дорожка', sets: 1, reps: '3 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Беговая дорожка.gif', description: 'Быстрая ходьба с активной работой руками. Скорость 5-6 км/ч. Размахивайте руками энергично для разогрева плечевого пояса.' }
         ],
         warmup_legs: [
-            { id: 'warmup_leg_swings', name: 'Махи ногами', sets: 2, reps: '15 на каждую', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/leg_swings.gif', description: 'Держитесь за опору. Делайте махи ногой вперёд-назад, затем в стороны. Нога прямая, амплитуда постепенно увеличивается.' },
-            { id: 'warmup_bodyweight_squats', name: 'Приседания без веса', sets: 2, reps: '15', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/bodyweight_squats.gif', description: 'Ноги на ширине плеч, носки слегка наружу. Приседайте, отводя таз назад, колени по направлению носков. Спина прямая, опускайтесь до параллели.' },
-            { id: 'warmup_lunges_dynamic', name: 'Динамические выпады', sets: 2, reps: '10 на каждую', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/lunges_dynamic.gif', description: 'Шагните вперёд, согните оба колена до 90°. Оттолкнитесь передней ногой, вернитесь назад. Чередуйте ноги. Спина прямая.' },
-            { id: 'warmup_hip_circles', name: 'Круговые вращения бёдрами', sets: 2, reps: '10 в каждую сторону', defaultWeight: 0, bodyweight: true, restTime: 20, icon: 'warmup', gif: 'exercises/hip_circles.gif', description: 'Руки на пояс, ноги на ширине плеч. Выполняйте круговые движения тазом по часовой и против часовой стрелки. Разогревает тазобедренные суставы.' }
+            { id: 'warmup_bike_legs', name: 'Велотренажёр', sets: 1, reps: '5 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Велотренажёр.gif', description: 'Идеальная разминка для ног. Крутите педали, постепенно увеличивая темп. Разогревает квадрицепсы, бицепсы бёдер и икры.' },
+            { id: 'warmup_stairmaster', name: 'Тренажёр-лестница', sets: 1, reps: '3 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Тренажёр-лестница.gif', description: 'Шагайте по движущимся ступеням. Темп умеренный. Отлично разогревает ягодицы, квадрицепсы и икроножные мышцы.' }
         ],
         // Общая кардио-разминка
         warmup_cardio: [
-            { id: 'warmup_jumping_jacks', name: 'Прыжки Джампинг Джек', sets: 1, reps: '30', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/jumping_jacks.gif', description: 'Прыжок с одновременным разведением ног в стороны и поднятием рук над головой. Вернитесь в исходную позицию прыжком. Темп быстрый.' }
+            { id: 'warmup_treadmill_cardio', name: 'Беговая дорожка', sets: 1, reps: '5 мин', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'warmup', gif: 'exercises/Беговая дорожка.gif', description: 'Лёгкий бег или быстрая ходьба. Начните с 5-6 км/ч, постепенно увеличьте до 7-8 км/ч. Поднимите пульс до рабочей зоны.' }
         ],
         
         // ОСНОВНЫЕ УПРАЖНЕНИЯ
         chest: [
-            { id: 'bench_press', name: 'Жим штанги лёжа', sets: 4, reps: '8-10', defaultWeight: 60, weightRatio: 0.85, restTime: 120, icon: 'benchPress', gif: 'exercises/bench_press.gif', description: 'Лягте на скамью, ноги упираются в пол. Хват чуть шире плеч. Опустите штангу к груди, локти под 45°. Выжмите вверх до выпрямления рук. Лопатки сведены.' },
-            { id: 'incline_dumbbell', name: 'Жим гантелей наклонный', sets: 3, reps: '10-12', defaultWeight: 24, weightRatio: 0.35, restTime: 90, icon: 'inclinePress', gif: 'exercises/incline_dumbbell.gif', description: 'Скамья под углом 30-45°. Гантели над грудью. Опустите до уровня груди, локти в стороны. Выжмите вверх, сводя гантели. Акцент на верхнюю грудь.' },
-            { id: 'dumbbell_fly', name: 'Разводка гантелей', sets: 3, reps: '12-15', defaultWeight: 14, weightRatio: 0.2, restTime: 60, icon: 'fly', gif: 'exercises/dumbbell_fly.gif', description: 'Лягте на скамью, гантели над грудью, руки слегка согнуты. Разведите руки в стороны дугой. Почувствуйте растяжение груди. Сведите обратно.' },
-            { id: 'cable_crossover', name: 'Сведение в кроссовере', sets: 3, reps: '12-15', defaultWeight: 15, weightRatio: 0.22, restTime: 60, icon: 'cable', gif: 'exercises/cable_crossover.gif', description: 'Встаньте между блоков, возьмите рукоятки. Шаг вперёд, лёгкий наклон. Сведите руки перед собой дугообразным движением. Контролируйте возврат.' }
+            { id: 'bench_press', name: 'Жим штанги лёжа', sets: 4, reps: '8-10', defaultWeight: 60, weightRatio: 0.85, restTime: 120, icon: 'benchPress', gif: 'exercises/Жим штанги лёжа.gif', description: 'Лягте на скамью, ноги упираются в пол. Хват чуть шире плеч. Опустите штангу к груди, локти под 45°. Выжмите вверх до выпрямления рук. Лопатки сведены.' },
+            { id: 'incline_dumbbell', name: 'Жим гантелей наклонный', sets: 3, reps: '10-12', defaultWeight: 24, weightRatio: 0.35, restTime: 90, icon: 'inclinePress', gif: 'exercises/Жим гантелей наклонный.gif', description: 'Скамья под углом 30-45°. Гантели над грудью. Опустите до уровня груди, локти в стороны. Выжмите вверх, сводя гантели. Акцент на верхнюю грудь.' },
+            { id: 'dumbbell_fly', name: 'Разводка гантелей', sets: 3, reps: '12-15', defaultWeight: 14, weightRatio: 0.2, restTime: 60, icon: 'fly', gif: 'exercises/Разводка гантелей.gif', description: 'Лягте на скамью, гантели над грудью, руки слегка согнуты. Разведите руки в стороны дугой. Почувствуйте растяжение груди. Сведите обратно.' },
+            { id: 'cable_crossover', name: 'Сведение в кроссовере', sets: 3, reps: '12-15', defaultWeight: 15, weightRatio: 0.22, restTime: 60, icon: 'cable', gif: 'exercises/Сведение в кроссовере.gif', description: 'Встаньте между блоков, возьмите рукоятки. Шаг вперёд, лёгкий наклон. Сведите руки перед собой дугообразным движением. Контролируйте возврат.' }
         ],
         triceps: [
-            { id: 'french_press', name: 'Французский жим', sets: 3, reps: '10-12', defaultWeight: 25, weightRatio: 0.35, restTime: 90, icon: 'frenchPress', gif: 'exercises/french_press.gif', description: 'Лёжа на скамье, штанга над головой. Согните локти, опуская штангу ко лбу. Локти неподвижны, работает только предплечье. Разогните руки.' },
-            { id: 'tricep_pushdown', name: 'Трицепс на блоке', sets: 3, reps: '12-15', defaultWeight: 25, weightRatio: 0.35, restTime: 60, icon: 'pushdown', gif: 'exercises/tricep_pushdown.gif', description: 'Стоя у блока, локти прижаты к телу. Разогните руки, опуская рукоятку вниз. В нижней точке напрягите трицепс. Медленно вернитесь.' },
-            { id: 'dips', name: 'Отжимания на брусьях', sets: 3, reps: '10-12', defaultWeight: 0, bodyweight: true, restTime: 90, icon: 'dips', gif: 'exercises/dips.gif', description: 'Упритесь руками в брусья, корпус слегка наклонён вперёд. Опуститесь, сгибая локти до 90°. Выжмите себя вверх. Акцент на трицепс — корпус вертикальнее.' }
+            { id: 'french_press', name: 'Французский жим', sets: 3, reps: '10-12', defaultWeight: 25, weightRatio: 0.35, restTime: 90, icon: 'frenchPress', gif: 'exercises/Французский жим.gif', description: 'Лёжа на скамье, штанга над головой. Согните локти, опуская штангу ко лбу. Локти неподвижны, работает только предплечье. Разогните руки.' },
+            { id: 'tricep_pushdown', name: 'Трицепс на блоке', sets: 3, reps: '12-15', defaultWeight: 25, weightRatio: 0.35, restTime: 60, icon: 'pushdown', gif: 'exercises/Трицепс на блоке.gif', description: 'Стоя у блока, локти прижаты к телу. Разогните руки, опуская рукоятку вниз. В нижней точке напрягите трицепс. Медленно вернитесь.' },
+            { id: 'dips', name: 'Отжимания на брусьях', sets: 3, reps: '10-12', defaultWeight: 0, bodyweight: true, restTime: 90, icon: 'dips', gif: 'exercises/Отжимания на брусьях.gif', description: 'Упритесь руками в брусья, корпус слегка наклонён вперёд. Опуститесь, сгибая локти до 90°. Выжмите себя вверх. Акцент на трицепс — корпус вертикальнее.' }
         ],
         back: [
-            { id: 'barbell_row', name: 'Тяга штанги в наклоне', sets: 4, reps: '8-10', defaultWeight: 60, weightRatio: 0.85, restTime: 120, icon: 'barbellRow', gif: 'exercises/barbell_row.gif', description: 'Наклонитесь вперёд, спина прямая, хват сверху. Тяните штангу к животу, сводя лопатки. Локти идут вдоль тела. Контролируйте опускание.' },
-            { id: 'lat_pulldown', name: 'Тяга верхнего блока', sets: 3, reps: '10-12', defaultWeight: 50, weightRatio: 0.7, restTime: 90, icon: 'latPulldown', gif: 'exercises/lat_pulldown.gif', description: 'Сядьте в тренажёр, возьмите рукоятку широким хватом. Тяните к верхней части груди, сводя лопатки. Локти направлены вниз. Контролируйте возврат.' },
-            { id: 'dumbbell_row', name: 'Тяга гантели в наклоне', sets: 3, reps: '10-12', defaultWeight: 28, weightRatio: 0.4, restTime: 90, icon: 'dumbbell', gif: 'exercises/dumbbell_row.gif', description: 'Одна рука и колено на скамье, другая нога на полу. Тяните гантель к бедру, локоть вверх. Сводите лопатку. Опускайте контролируемо.' },
-            { id: 'seated_row', name: 'Тяга горизонтального блока', sets: 3, reps: '12-15', defaultWeight: 45, weightRatio: 0.65, restTime: 60, icon: 'seatedRow', gif: 'exercises/seated_row.gif', description: 'Сядьте, ноги упираются в платформу, колени слегка согнуты. Тяните рукоятку к животу, сводя лопатки. Спина прямая. Контролируйте возврат.' }
+            { id: 'barbell_row', name: 'Тяга штанги в наклоне', sets: 4, reps: '8-10', defaultWeight: 60, weightRatio: 0.85, restTime: 120, icon: 'barbellRow', gif: 'exercises/Тяга штанги в наклоне.gif', description: 'Наклонитесь вперёд, спина прямая, хват сверху. Тяните штангу к животу, сводя лопатки. Локти идут вдоль тела. Контролируйте опускание.' },
+            { id: 'lat_pulldown', name: 'Тяга верхнего блока', sets: 3, reps: '10-12', defaultWeight: 50, weightRatio: 0.7, restTime: 90, icon: 'latPulldown', gif: 'exercises/Тяга верхнего блока.gif', description: 'Сядьте в тренажёр, возьмите рукоятку широким хватом. Тяните к верхней части груди, сводя лопатки. Локти направлены вниз. Контролируйте возврат.' },
+            { id: 'dumbbell_row', name: 'Тяга гантели в наклоне', sets: 3, reps: '10-12', defaultWeight: 28, weightRatio: 0.4, restTime: 90, icon: 'dumbbell', gif: 'exercises/Тяга гантели в наклоне.gif', description: 'Одна рука и колено на скамье, другая нога на полу. Тяните гантель к бедру, локоть вверх. Сводите лопатку. Опускайте контролируемо.' },
+            { id: 'seated_row', name: 'Тяга горизонтального блока', sets: 3, reps: '12-15', defaultWeight: 45, weightRatio: 0.65, restTime: 60, icon: 'seatedRow', gif: 'exercises/Тяга горизонтального блока.gif', description: 'Сядьте, ноги упираются в платформу, колени слегка согнуты. Тяните рукоятку к животу, сводя лопатки. Спина прямая. Контролируйте возврат.' }
         ],
         biceps: [
-            { id: 'barbell_curl', name: 'Подъём штанги на бицепс', sets: 3, reps: '10-12', defaultWeight: 30, weightRatio: 0.43, restTime: 90, icon: 'barbellCurl', gif: 'exercises/barbell_curl.gif', description: 'Стоя, штанга в опущенных руках, хват снизу на ширине плеч. Согните руки, поднимая штангу к плечам. Локти неподвижны. Опустите контролируемо.' },
-            { id: 'hammer_curl', name: 'Молотки', sets: 3, reps: '12-15', defaultWeight: 14, weightRatio: 0.2, restTime: 60, icon: 'hammerCurl', gif: 'exercises/hammer_curl.gif', description: 'Гантели в опущенных руках, хват нейтральный (ладони друг к другу). Согните руки, поднимая гантели к плечам. Локти неподвижны.' },
-            { id: 'concentration_curl', name: 'Концентрированный подъём', sets: 2, reps: '12-15', defaultWeight: 12, weightRatio: 0.17, restTime: 60, icon: 'concentration', gif: 'exercises/concentration_curl.gif', description: 'Сидя, локоть упирается во внутреннюю часть бедра. Поднимите гантель к плечу, максимально напрягая бицепс. Медленно опустите.' }
+            { id: 'barbell_curl', name: 'Подъём штанги на бицепс', sets: 3, reps: '10-12', defaultWeight: 30, weightRatio: 0.43, restTime: 90, icon: 'barbellCurl', gif: 'exercises/Подъём штанги на бицепс.gif', description: 'Стоя, штанга в опущенных руках, хват снизу на ширине плеч. Согните руки, поднимая штангу к плечам. Локти неподвижны. Опустите контролируемо.' },
+            { id: 'hammer_curl', name: 'Молотки', sets: 3, reps: '12-15', defaultWeight: 14, weightRatio: 0.2, restTime: 60, icon: 'hammerCurl', gif: 'exercises/Молотки.gif', description: 'Гантели в опущенных руках, хват нейтральный (ладони друг к другу). Согните руки, поднимая гантели к плечам. Локти неподвижны.' },
+            { id: 'concentration_curl', name: 'Концентрированный подъём', sets: 2, reps: '12-15', defaultWeight: 12, weightRatio: 0.17, restTime: 60, icon: 'concentration', gif: 'exercises/Концентрированный подъём.gif', description: 'Сидя, локоть упирается во внутреннюю часть бедра. Поднимите гантель к плечу, максимально напрягая бицепс. Медленно опустите.' }
         ],
         shoulders: [
-            { id: 'shoulder_press', name: 'Жим гантелей сидя', sets: 4, reps: '8-10', defaultWeight: 22, weightRatio: 0.3, restTime: 120, icon: 'shoulderPress', gif: 'exercises/shoulder_press.gif', description: 'Сидя на скамье с опорой, гантели у плеч. Выжмите гантели вверх, сводя их над головой. Опустите до уровня ушей. Спина прижата к опоре.' },
-            { id: 'lateral_raise', name: 'Махи в стороны', sets: 3, reps: '12-15', defaultWeight: 10, weightRatio: 0.14, restTime: 60, icon: 'lateralRaise', gif: 'exercises/lateral_raise.gif', description: 'Стоя, гантели по бокам. Поднимите руки в стороны до параллели с полом. Лёгкий наклон кистей вниз. Опустите контролируемо.' },
-            { id: 'front_raise', name: 'Подъём перед собой', sets: 3, reps: '12-15', defaultWeight: 10, weightRatio: 0.14, restTime: 60, icon: 'frontRaise', gif: 'exercises/front_raise.gif', description: 'Стоя, гантели перед бёдрами. Поднимите прямые руки вперёд до уровня плеч. Опустите контролируемо. Не используйте инерцию.' },
-            { id: 'rear_delt', name: 'Махи в наклоне', sets: 3, reps: '12-15', defaultWeight: 8, weightRatio: 0.11, restTime: 60, icon: 'rearDelt', gif: 'exercises/rear_delt.gif', description: 'Наклонитесь вперёд, спина прямая. Гантели внизу. Разведите руки в стороны, сводя лопатки. Задняя дельта и трапеция в работе.' }
+            { id: 'shoulder_press', name: 'Жим гантелей сидя', sets: 4, reps: '8-10', defaultWeight: 22, weightRatio: 0.3, restTime: 120, icon: 'shoulderPress', gif: 'exercises/Жим гантелей сидя.gif', description: 'Сидя на скамье с опорой, гантели у плеч. Выжмите гантели вверх, сводя их над головой. Опустите до уровня ушей. Спина прижата к опоре.' },
+            { id: 'lateral_raise', name: 'Махи в стороны', sets: 3, reps: '12-15', defaultWeight: 10, weightRatio: 0.14, restTime: 60, icon: 'lateralRaise', gif: 'exercises/Махи в стороны.gif', description: 'Стоя, гантели по бокам. Поднимите руки в стороны до параллели с полом. Лёгкий наклон кистей вниз. Опустите контролируемо.' },
+            { id: 'front_raise', name: 'Подъём перед собой', sets: 3, reps: '12-15', defaultWeight: 10, weightRatio: 0.14, restTime: 60, icon: 'frontRaise', gif: 'exercises/Подъём перед собой.gif', description: 'Стоя, гантели перед бёдрами. Поднимите прямые руки вперёд до уровня плеч. Опустите контролируемо. Не используйте инерцию.' },
+            { id: 'rear_delt', name: 'Махи в наклоне', sets: 3, reps: '12-15', defaultWeight: 8, weightRatio: 0.11, restTime: 60, icon: 'rearDelt', gif: 'exercises/Махи в наклоне.gif', description: 'Наклонитесь вперёд, спина прямая. Гантели внизу. Разведите руки в стороны, сводя лопатки. Задняя дельта и трапеция в работе.' }
         ],
         forearms: [
-            { id: 'wrist_curl', name: 'Сгибание запястий', sets: 3, reps: '15-20', defaultWeight: 20, weightRatio: 0.28, restTime: 45, icon: 'wristCurl', gif: 'exercises/wrist_curl.gif', description: 'Предплечья на коленях, кисти свисают. Хват снизу. Согните запястья, поднимая штангу/гантели. Опустите полностью. Работают сгибатели.' },
-            { id: 'reverse_curl', name: 'Обратные сгибания', sets: 3, reps: '12-15', defaultWeight: 15, weightRatio: 0.21, restTime: 45, icon: 'reverseCurl', gif: 'exercises/reverse_curl.gif', description: 'Стоя, штанга в опущенных руках, хват сверху. Согните руки, поднимая штангу к плечам. Работают плечелучевые и предплечья.' }
+            { id: 'wrist_curl', name: 'Сгибание запястий', sets: 3, reps: '15-20', defaultWeight: 20, weightRatio: 0.28, restTime: 45, icon: 'wristCurl', gif: 'exercises/Сгибание запястий.gif', description: 'Предплечья на коленях, кисти свисают. Хват снизу. Согните запястья, поднимая штангу/гантели. Опустите полностью. Работают сгибатели.' },
+            { id: 'reverse_curl', name: 'Обратные сгибания', sets: 3, reps: '12-15', defaultWeight: 15, weightRatio: 0.21, restTime: 45, icon: 'reverseCurl', gif: 'exercises/Обратные сгибания.gif', description: 'Стоя, штанга в опущенных руках, хват сверху. Согните руки, поднимая штангу к плечам. Работают плечелучевые и предплечья.' }
         ],
         legs: [
-            { id: 'squat', name: 'Приседания со штангой', sets: 4, reps: '8-10', defaultWeight: 80, weightRatio: 1.15, restTime: 180, icon: 'squat', gif: 'exercises/squat.gif', description: 'Штанга на трапеции, ноги на ширине плеч, носки слегка наружу. Приседайте, отводя таз назад. Колени по направлению носков. Спина прямая, до параллели или ниже.' },
-            { id: 'leg_press', name: 'Жим ногами', sets: 4, reps: '10-12', defaultWeight: 150, weightRatio: 2.1, restTime: 120, icon: 'legPress', gif: 'exercises/leg_press.gif', description: 'Сядьте в тренажёр, ноги на платформе на ширине плеч. Согните ноги, опуская платформу. Не отрывайте поясницу. Выжмите, не выпрямляя колени до конца.' },
-            { id: 'lunges', name: 'Выпады с гантелями', sets: 3, reps: '10-12', defaultWeight: 20, weightRatio: 0.28, restTime: 90, icon: 'lunges', gif: 'exercises/lunges.gif', description: 'Гантели по бокам. Шагните вперёд, согните оба колена до 90°. Переднее колено не выходит за носок. Оттолкнитесь передней ногой, вернитесь.' },
-            { id: 'leg_curl', name: 'Сгибание ног', sets: 3, reps: '12-15', defaultWeight: 40, weightRatio: 0.55, restTime: 60, icon: 'legCurl', gif: 'exercises/leg_curl.gif', description: 'Лёжа лицом вниз в тренажёре, валик выше пяток. Согните ноги, притягивая валик к ягодицам. Медленно опустите. Работают бицепсы бёдер.' },
-            { id: 'leg_extension', name: 'Разгибание ног', sets: 3, reps: '12-15', defaultWeight: 45, weightRatio: 0.65, restTime: 60, icon: 'legExtension', gif: 'exercises/leg_extension.gif', description: 'Сидя в тренажёре, валик на голени. Разогните ноги, поднимая валик. В верхней точке напрягите квадрицепс. Медленно опустите.' },
-            { id: 'calf_raise', name: 'Подъём на носки', sets: 4, reps: '15-20', defaultWeight: 80, weightRatio: 1.15, restTime: 45, icon: 'calfRaise', gif: 'exercises/calf_raise.gif', description: 'Стоя в тренажёре или на ступеньке. Опустите пятки максимально вниз, растягивая икры. Поднимитесь на носки как можно выше. Пауза в верхней точке.' }
+            { id: 'squat', name: 'Приседания со штангой', sets: 4, reps: '8-10', defaultWeight: 80, weightRatio: 1.15, restTime: 180, icon: 'squat', gif: 'exercises/Приседания со штангой.gif', description: 'Штанга на трапеции, ноги на ширине плеч, носки слегка наружу. Приседайте, отводя таз назад. Колени по направлению носков. Спина прямая, до параллели или ниже.' },
+            { id: 'leg_press', name: 'Жим ногами', sets: 4, reps: '10-12', defaultWeight: 150, weightRatio: 2.1, restTime: 120, icon: 'legPress', gif: 'exercises/Жим ногами.gif', description: 'Сядьте в тренажёр, ноги на платформе на ширине плеч. Согните ноги, опуская платформу. Не отрывайте поясницу. Выжмите, не выпрямляя колени до конца.' },
+            { id: 'lunges', name: 'Выпады с гантелями', sets: 3, reps: '10-12', defaultWeight: 20, weightRatio: 0.28, restTime: 90, icon: 'lunges', gif: 'exercises/Выпады с гантелями.gif', description: 'Гантели по бокам. Шагните вперёд, согните оба колена до 90°. Переднее колено не выходит за носок. Оттолкнитесь передней ногой, вернитесь.' },
+            { id: 'leg_curl', name: 'Сгибание ног', sets: 3, reps: '12-15', defaultWeight: 40, weightRatio: 0.55, restTime: 60, icon: 'legCurl', gif: 'exercises/Сгибание ног.gif', description: 'Лёжа лицом вниз в тренажёре, валик выше пяток. Согните ноги, притягивая валик к ягодицам. Медленно опустите. Работают бицепсы бёдер.' },
+            { id: 'leg_extension', name: 'Разгибание ног', sets: 3, reps: '12-15', defaultWeight: 45, weightRatio: 0.65, restTime: 60, icon: 'legExtension', gif: 'exercises/ Разгибание ног.gif', description: 'Сидя в тренажёре, валик на голени. Разогните ноги, поднимая валик. В верхней точке напрягите квадрицепс. Медленно опустите.' },
+            { id: 'calf_raise', name: 'Подъём на носки', sets: 4, reps: '15-20', defaultWeight: 80, weightRatio: 1.15, restTime: 45, icon: 'calfRaise', gif: 'exercises/Подъём на носки.gif', description: 'Стоя в тренажёре или на ступеньке. Опустите пятки максимально вниз, растягивая икры. Поднимитесь на носки как можно выше. Пауза в верхней точке.' }
         ],
         abs: [
-            { id: 'crunches', name: 'Скручивания', sets: 3, reps: '15-20', defaultWeight: 0, bodyweight: true, restTime: 45, icon: 'abs', gif: 'exercises/crunches.gif', description: 'Лёжа на спине, ноги согнуты, руки за головой. Поднимите плечи, скручивая корпус. Поясница прижата к полу. Не тяните голову руками.' },
-            { id: 'leg_raises', name: 'Подъём ног в висе', sets: 3, reps: '12-15', defaultWeight: 0, bodyweight: true, restTime: 45, icon: 'abs', gif: 'exercises/leg_raises.gif', description: 'Вис на перекладине, ноги прямые. Поднимите ноги до параллели или выше. Контролируйте опускание. Не раскачивайтесь.' },
-            { id: 'plank', name: 'Планка', sets: 3, reps: '45-60 сек', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'abs', gif: 'exercises/plank.gif', description: 'Упор на локтях и носках. Тело образует прямую линию. Напрягите пресс и ягодицы. Не прогибайтесь в пояснице. Дышите ровно.' }
+            { id: 'crunches', name: 'Скручивания', sets: 3, reps: '15-20', defaultWeight: 0, bodyweight: true, restTime: 45, icon: 'abs', gif: 'exercises/Скручивания.gif', description: 'Лёжа на спине, ноги согнуты, руки за головой. Поднимите плечи, скручивая корпус. Поясница прижата к полу. Не тяните голову руками.' },
+            { id: 'leg_raises', name: 'Подъём ног в висе', sets: 3, reps: '12-15', defaultWeight: 0, bodyweight: true, restTime: 45, icon: 'abs', gif: 'exercises/подъём ног в висе.gif', description: 'Вис на перекладине, ноги прямые. Поднимите ноги до параллели или выше. Контролируйте опускание. Не раскачивайтесь.' },
+            { id: 'plank', name: 'Планка', sets: 3, reps: '45-60 сек', defaultWeight: 0, bodyweight: true, restTime: 30, icon: 'abs', gif: 'exercises/Планка.gif', description: 'Упор на локтях и носках. Тело образует прямую линию. Напрягите пресс и ягодицы. Не прогибайтесь в пояснице. Дышите ровно.' }
         ]
     },
 
@@ -2885,6 +3264,38 @@ const CONFIG = {
         volume_1000: { id: 'volume_1000', name: 'Тонна', desc: 'Поднять 1 тонну', icon: 'weight', condition: s => s.volume >= 1000 },
         volume_10000: { id: 'volume_10000', name: '10 тонн', desc: 'Поднять 10 тонн', icon: 'dumbbell', condition: s => s.volume >= 10000 }
     },
+
+    // АНТИНАГРАДЫ (медали позора) - видны всем участникам
+    SHAME_ACHIEVEMENTS: {
+        skip_1: { id: 'skip_1', name: 'Первый прогул', desc: 'Пропустил первый подход', icon: 'x', message: '🦥 Ленивец дня! Первый подход и уже сдулся?', condition: s => s.skippedSets >= 1 },
+        skip_5: { id: 'skip_5', name: 'Любитель халявы', desc: 'Пропустил 5 подходов', icon: 'coffee', message: '☕ Может тебе лучше на диван? 5 подходов мимо!', condition: s => s.skippedSets >= 5 },
+        skip_10: { id: 'skip_10', name: 'Профессиональный лентяй', desc: 'Пропустил 10 подходов', icon: 'moon', message: '😴 Уже 10 пропусков! Ты вообще тренируешься?', condition: s => s.skippedSets >= 10 },
+        skip_25: { id: 'skip_25', name: 'Мастер отмазок', desc: 'Пропустил 25 подходов', icon: 'x', message: '🎭 25 подходов слил! Может в театр пойдёшь?', condition: s => s.skippedSets >= 25 },
+        skip_50: { id: 'skip_50', name: 'Легенда безделья', desc: 'Пропустил 50 подходов', icon: 'award', message: '🏆 50 пропусков! Поздравляем с анти-рекордом!', condition: s => s.skippedSets >= 50 },
+        quit_early_1: { id: 'quit_early_1', name: 'Слабак', desc: 'Завершил тренировку досрочно', icon: 'logOut', message: '🚪 Сбежал с тренировки? Слабовато...', condition: s => s.earlyQuits >= 1 },
+        quit_early_3: { id: 'quit_early_3', name: 'Король отступлений', desc: '3 досрочных завершения', icon: 'arrowLeft', message: '👑 Три побега! Может спорт не твоё?', condition: s => s.earlyQuits >= 3 },
+        quit_early_5: { id: 'quit_early_5', name: 'Профи по сливу', desc: '5 досрочных завершений', icon: 'x', message: '💩 5 недотренировок! Позорище!', condition: s => s.earlyQuits >= 5 },
+        zero_volume: { id: 'zero_volume', name: 'Невидимка', desc: 'Тренировка без единого кг', icon: 'x', message: '👻 Пришёл, посмотрел, ушёл. Эффективно!', condition: s => s.zeroWorkouts >= 1 },
+        weak_excuse: { id: 'weak_excuse', name: 'Нытик', desc: 'Заменил 5 упражнений', icon: 'repeat', message: '😭 5 замен! Всё тебе не так, принцесса?', condition: s => s.exerciseReplacements >= 5 },
+        replace_king: { id: 'replace_king', name: 'Мастер замен', desc: 'Заменил 15 упражнений', icon: 'repeat', message: '🔄 15 замен! Может свою программу напишешь?', condition: s => s.exerciseReplacements >= 15 },
+        streak_breaker: { id: 'streak_breaker', name: 'Разрушитель серий', desc: 'Прервал серию 7+ дней', icon: 'flame', message: '🔥➡️💨 Была серия - и нет серии!', condition: s => s.brokenStreaks >= 1 },
+        monday_skipper: { id: 'monday_skipper', name: 'Враг понедельника', desc: 'Пропустил 3 понедельника', icon: 'calendar', message: '📅 Понедельник тебя боится! 3 пропуска!', condition: s => s.mondaySkips >= 3 },
+        timer_coward: { id: 'timer_coward', name: 'Трус таймера', desc: 'Сдался на планке 5 раз', icon: 'timer', message: '⏱️ Планка победила тебя 5 раз!', condition: s => s.timerFails >= 5 },
+        shame_collector: { id: 'shame_collector', name: 'Коллекционер позора', desc: 'Собрал 10 антинаград', icon: 'award', message: '🎪 10 медалей позора! Ты уникален!', condition: s => (s.shameAchievements?.length || 0) >= 10 }
+    },
+
+    // Персонажи для выбора (уровень определяется автоматически по достижениям)
+    // levels: количество уровней у персонажа (3 или 4)
+    CHARACTERS: {
+        muhamed: { id: 'muhamed', name: 'Лысый', baseSrc: 'muhamed', levels: 4 },
+        nikolay: { id: 'nikolay', name: 'Лохматый', baseSrc: 'nikolay', levels: 4 },
+        // Добавь сюда новых персонажей с 3 уровнями:
+        // hero1: { id: 'hero1', name: 'Герой 1', baseSrc: 'hero1', levels: 3 },
+        // hero2: { id: 'hero2', name: 'Герой 2', baseSrc: 'hero2', levels: 3 },
+    },
+
+    // Упражнения на время (таймер вместо повторений)
+    TIMED_EXERCISES: ['plank', 'wall_sit', 'dead_hang', 'side_plank'],
 
     DEFAULT_REST_TIME: 90
 };
@@ -2958,6 +3369,7 @@ class FitProApp {
         // Настройки
         document.getElementById('iconSettingsUser').innerHTML = icon('user', 'md');
         document.getElementById('iconBodyWeight').innerHTML = icon('scale', 'md');
+        document.getElementById('iconAvatar').innerHTML = icon('user', 'md');
         document.getElementById('iconSettingsTimer').innerHTML = icon('timer', 'md');
         document.getElementById('iconExport').innerHTML = icon('upload', 'md');
         document.getElementById('iconImport').innerHTML = icon('download', 'md');
@@ -2972,8 +3384,9 @@ class FitProApp {
         document.getElementById('btnCalculate').innerHTML = icon('zap', 'md') + ' Рассчитать';
         
         // Стрелки
-        ['arrowName', 'arrowBodyWeight', 'arrowRest', 'arrowExport', 'arrowImport', 'arrowReset', 'arrowLogout', 'arrowCalculator', 'arrowGifManager'].forEach(id => {
-            document.getElementById(id).innerHTML = icon('chevronRight', 'md');
+        ['arrowName', 'arrowBodyWeight', 'arrowAvatar', 'arrowRest', 'arrowExport', 'arrowImport', 'arrowReset', 'arrowLogout', 'arrowCalculator', 'arrowGifManager'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = icon('chevronRight', 'md');
         });
     }
 
@@ -2984,6 +3397,7 @@ class FitProApp {
         Object.values(CONFIG.USERS).forEach(user => {
             const stats = this.getStats(user.id);
             const displayName = this.getDisplayName(user.id);
+            const shameCount = (stats.shameAchievements || []).length;
             
             const card = document.createElement('div');
             card.className = 'user-card';
@@ -2996,6 +3410,7 @@ class FitProApp {
                     <div class="user-stats-mini">
                         <span>${icon('flame', 'sm')} ${stats.streak} дней</span>
                         <span>${icon('trophy', 'sm')} ${stats.total} трен.</span>
+                        ${shameCount > 0 ? `<span style="color: #EF4444;">💩 ${shameCount}</span>` : ''}
                     </div>
                 </div>
                 <div class="user-arrow">${icon('chevronRight', 'md')}</div>
@@ -3019,6 +3434,7 @@ class FitProApp {
 
         document.getElementById('settingsChangeName').onclick = () => this.openModal('modalName');
         document.getElementById('settingsBodyWeight').onclick = () => this.openModal('modalBodyWeight');
+        document.getElementById('settingsAvatar').onclick = () => this.openAvatarModal();
         document.getElementById('settingsRestTime').onclick = () => this.openModal('modalRest');
         document.getElementById('settingsExport').onclick = () => this.exportData();
         document.getElementById('settingsImport').onclick = () => document.getElementById('importFile').click();
@@ -3034,6 +3450,11 @@ class FitProApp {
         document.getElementById('btnCancelRest').onclick = () => this.closeModal('modalRest');
         document.getElementById('btnSaveRest').onclick = () => this.saveRestTime();
         document.getElementById('importFile').onchange = (e) => this.importData(e);
+        
+        // Модальные окна
+        document.getElementById('btnCloseReplace').onclick = () => this.closeReplaceModal();
+        document.getElementById('btnCloseAvatar').onclick = () => this.closeAvatarModal();
+        document.getElementById('btnSaveAvatar').onclick = () => this.saveAvatar();
         
         // Калькулятор 1RM
         document.getElementById('btnCloseCalculator').onclick = () => this.closeCalculator();
@@ -3196,7 +3617,7 @@ class FitProApp {
         this.updateCharacterLevel();
     }
     
-    // Управление уровнем прокачки персонажа - показываем все 4 стадии с прогрессом
+    // Управление уровнем прокачки персонажа - показываем все стадии с прогрессом
     updateCharacterLevel() {
         const stagesContainer = document.getElementById('characterStages');
         const progressFill = document.getElementById('progressLineFill');
@@ -3205,38 +3626,37 @@ class FitProApp {
         
         if (!stagesContainer || !progressFill) return;
         
-        // Выбираем базовое имя изображения на основе текущего пользователя
-        // mohammed -> muhamed_1.png - muhamed_4.png (лысый)
-        // nikolay, dmitry -> nikolay_1.png - nikolay_4.png (длинноволосый)
-        let characterBase = 'nikolay';
-        if (this.currentUser === 'mohammed') {
-            characterBase = 'muhamed';
-        } else if (this.currentUser === 'nikolay' || this.currentUser === 'dmitry') {
-            characterBase = 'nikolay';
-        }
+        // Получаем выбранного персонажа и его параметры
+        const characterId = this.getSelectedCharacter();
+        const char = CONFIG.CHARACTERS[characterId];
+        const maxLevels = char?.levels || 4;
+        const currentLevel = this.getCharacterLevel(maxLevels);
         
         const stats = this.getStats();
         const totalWorkouts = stats.total || 0;
         
-        // Пороги для уровней
-        const thresholds = [0, 20, 50, 100];
-        const levelNames = ['Новичок', 'Любитель', 'Спортсмен', 'Атлет'];
+        // Пороги и названия в зависимости от количества уровней
+        let thresholds, levelNames;
+        if (maxLevels === 4) {
+            thresholds = [0, 20, 50, 100];
+            levelNames = ['Новичок', 'Любитель', 'Спортсмен', 'Атлет'];
+        } else {
+            thresholds = [0, 30, 80];
+            levelNames = ['Новичок', 'Продвинутый', 'Мастер'];
+        }
         
-        // Определяем текущий уровень (0-3)
-        let currentLevel = 0;
-        if (totalWorkouts >= 100) currentLevel = 3;
-        else if (totalWorkouts >= 50) currentLevel = 2;
-        else if (totalWorkouts >= 20) currentLevel = 1;
+        // Текущий уровень (0-based для индекса)
+        const levelIndex = currentLevel - 1;
         
-        // Создаём 4 стадии персонажа
+        // Создаём стадии персонажа
         stagesContainer.innerHTML = '';
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < maxLevels; i++) {
             const stage = document.createElement('div');
             stage.className = 'character-stage';
             stage.setAttribute('data-level', i);
             
             const img = document.createElement('img');
-            img.src = `${characterBase}_${i + 1}.png`;
+            img.src = `${characterId}_${i + 1}.png`;
             img.alt = levelNames[i];
             // Если картинка не загрузилась - показываем placeholder
             img.onerror = function() {
@@ -3245,10 +3665,10 @@ class FitProApp {
             };
             stage.appendChild(img);
             
-            if (i <= currentLevel) {
+            if (i <= levelIndex) {
                 stage.classList.add('reached');
             }
-            if (i === currentLevel) {
+            if (i === levelIndex) {
                 stage.classList.add('current');
             }
             
@@ -3256,26 +3676,38 @@ class FitProApp {
             stagesContainer.appendChild(stage);
         }
         
-        // Вычисляем прогресс - линейный от 0 до 100 тренировок
-        // 0-20 = 0-25%, 20-50 = 25-50%, 50-100 = 50-100%
+        // Вычисляем прогресс в зависимости от количества уровней
         let progress = 0;
         let progressText = '';
+        const maxThreshold = thresholds[thresholds.length - 1];
         
-        if (totalWorkouts >= 100) {
-            progress = 100;
-            progressText = 'Максимум! 💪';
-        } else if (totalWorkouts >= 50) {
-            // От 50 до 100: прогресс 50-100%
-            progress = 50 + ((totalWorkouts - 50) / 50) * 50;
-            progressText = `${totalWorkouts} / 100`;
-        } else if (totalWorkouts >= 20) {
-            // От 20 до 50: прогресс 25-50%
-            progress = 25 + ((totalWorkouts - 20) / 30) * 25;
-            progressText = `${totalWorkouts} / 50`;
+        if (maxLevels === 4) {
+            // 4 уровня: 0-20 = 0-25%, 20-50 = 25-50%, 50-100 = 50-100%
+            if (totalWorkouts >= 100) {
+                progress = 100;
+                progressText = 'Максимум! 💪';
+            } else if (totalWorkouts >= 50) {
+                progress = 50 + ((totalWorkouts - 50) / 50) * 50;
+                progressText = `${totalWorkouts} / 100`;
+            } else if (totalWorkouts >= 20) {
+                progress = 25 + ((totalWorkouts - 20) / 30) * 25;
+                progressText = `${totalWorkouts} / 50`;
+            } else {
+                progress = (totalWorkouts / 20) * 25;
+                progressText = `${totalWorkouts} / 20`;
+            }
         } else {
-            // От 0 до 20: прогресс 0-25%
-            progress = (totalWorkouts / 20) * 25;
-            progressText = `${totalWorkouts} / 20`;
+            // 3 уровня: 0-30 = 0-33%, 30-80 = 33-100%
+            if (totalWorkouts >= 80) {
+                progress = 100;
+                progressText = 'Максимум! 💪';
+            } else if (totalWorkouts >= 30) {
+                progress = 33 + ((totalWorkouts - 30) / 50) * 67;
+                progressText = `${totalWorkouts} / 80`;
+            } else {
+                progress = (totalWorkouts / 30) * 33;
+                progressText = `${totalWorkouts} / 30`;
+            }
         }
         
         progressFill.style.width = `${progress}%`;
@@ -3656,6 +4088,15 @@ class FitProApp {
                         ${this.renderExerciseDemo(exercise)}
                     </div>
                     ${exercise.description ? `<div class="exercise-description">${exercise.description}</div>` : ''}
+                    <div class="exercise-actions">
+                        <button type="button" class="btn-skip-set" data-action="skip" data-index="${index}" ${isCompleted ? 'disabled' : ''}>
+                            ${icon('skipForward', 'sm')} Пропустить
+                        </button>
+                        <button type="button" class="btn-replace-exercise" data-action="replace" data-index="${index}" ${isCompleted ? 'disabled' : ''}>
+                            ${icon('repeat', 'sm')} Заменить
+                        </button>
+                    </div>
+                    ${this.isTimedExercise(exercise) ? this.renderExerciseTimer(exercise, index) : ''}
                     <div class="sets-row">${this.renderSetButtons(exercise, index)}</div>
                     ${isBodyweight ? `
                     <div class="weight-row bodyweight-info">
@@ -3696,6 +4137,40 @@ class FitProApp {
                 });
             }
             
+            // Кнопка пропустить подход
+            const skipBtn = card.querySelector('[data-action="skip"]');
+            if (skipBtn) {
+                skipBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.skipSet(index);
+                });
+            }
+            
+            // Кнопка заменить упражнение
+            const replaceBtn = card.querySelector('[data-action="replace"]');
+            if (replaceBtn) {
+                replaceBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.openReplaceModal(index);
+                });
+            }
+            
+            // Кнопки таймера для упражнений на время
+            const timerStartBtn = card.querySelector('[data-action="timer-start"]');
+            const timerStopBtn = card.querySelector('[data-action="timer-stop"]');
+            if (timerStartBtn) {
+                timerStartBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.startExerciseTimer(index);
+                });
+            }
+            if (timerStopBtn) {
+                timerStopBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.stopExerciseTimer(index);
+                });
+            }
+            
             // Кнопки веса (если не bodyweight)
             if (!isBodyweight) {
                 const minusBtn = card.querySelector('[data-action="minus"]');
@@ -3724,6 +4199,106 @@ class FitProApp {
             
             list.appendChild(card);
         });
+    }
+
+    // Проверка, является ли упражнение упражнением на время (планка и т.д.)
+    isTimedExercise(exercise) {
+        // Проверяем по ID или по формату повторений (содержит "сек")
+        if (CONFIG.TIMED_EXERCISES && CONFIG.TIMED_EXERCISES.includes(exercise.id)) return true;
+        if (exercise.reps && exercise.reps.toString().includes('сек')) return true;
+        return false;
+    }
+    
+    // Рендер таймера для упражнений на время
+    renderExerciseTimer(exercise, index) {
+        // Извлекаем время из строки типа "45-60 сек"
+        const repsStr = exercise.reps.toString();
+        const timeMatch = repsStr.match(/(\d+)/);
+        const targetTime = timeMatch ? parseInt(timeMatch[0]) : 30;
+        
+        return `
+            <div class="exercise-timer" id="exerciseTimer-${index}">
+                <div class="exercise-timer-display" id="timerDisplay-${index}">${targetTime}</div>
+                <div class="exercise-timer-label">секунд (цель: ${repsStr})</div>
+                <div class="exercise-timer-controls">
+                    <button type="button" class="timer-control-btn timer-start-btn" data-action="timer-start" data-index="${index}" id="timerStart-${index}">
+                        ${icon('play', 'sm')} Старт
+                    </button>
+                    <button type="button" class="timer-control-btn timer-stop-btn" data-action="timer-stop" data-index="${index}" id="timerStop-${index}" style="display:none;">
+                        ${icon('x', 'sm')} Стоп
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Запуск таймера упражнения
+    startExerciseTimer(index) {
+        const exercise = this.currentWorkout.exercises[index];
+        const repsStr = exercise.reps.toString();
+        const timeMatch = repsStr.match(/(\d+)/);
+        const targetTime = timeMatch ? parseInt(timeMatch[0]) : 30;
+        
+        let currentTime = 0;
+        const displayEl = document.getElementById(`timerDisplay-${index}`);
+        const startBtn = document.getElementById(`timerStart-${index}`);
+        const stopBtn = document.getElementById(`timerStop-${index}`);
+        
+        if (startBtn) startBtn.style.display = 'none';
+        if (stopBtn) stopBtn.style.display = 'inline-flex';
+        
+        this.exerciseTimerInterval = setInterval(() => {
+            currentTime++;
+            if (displayEl) {
+                displayEl.textContent = currentTime;
+                if (currentTime >= targetTime) {
+                    displayEl.style.color = 'var(--success)';
+                }
+            }
+        }, 1000);
+        
+        this.currentExerciseTimerIndex = index;
+    }
+    
+    // Остановка таймера упражнения
+    stopExerciseTimer(index, failed = false) {
+        if (this.exerciseTimerInterval) {
+            clearInterval(this.exerciseTimerInterval);
+            this.exerciseTimerInterval = null;
+        }
+        
+        const displayEl = document.getElementById(`timerDisplay-${index}`);
+        const startBtn = document.getElementById(`timerStart-${index}`);
+        const stopBtn = document.getElementById(`timerStop-${index}`);
+        
+        if (startBtn) startBtn.style.display = 'inline-flex';
+        if (stopBtn) stopBtn.style.display = 'none';
+        
+        // Проверяем достиг ли цели
+        const exercise = this.currentWorkout.exercises[index];
+        const repsStr = exercise.reps.toString();
+        const timeMatch = repsStr.match(/(\d+)/);
+        const targetTime = timeMatch ? parseInt(timeMatch[0]) : 30;
+        const currentTime = displayEl ? parseInt(displayEl.textContent) : 0;
+        
+        if (currentTime < targetTime && !failed) {
+            // Не достиг цели - триггер антинаграды
+            this.triggerTimerFail();
+        }
+        
+        // Сбрасываем таймер
+        if (displayEl) {
+            displayEl.textContent = targetTime;
+            displayEl.style.color = '';
+        }
+    }
+    
+    // Триггер провала на таймере
+    triggerTimerFail() {
+        const stats = this.getStats();
+        stats.timerFails = (stats.timerFails || 0) + 1;
+        this.saveStats(stats);
+        this.checkShameAchievements(stats);
     }
 
     renderExerciseDemo(exercise) {
@@ -3772,6 +4347,191 @@ class FitProApp {
     setActiveExercise(index) {
         this.currentWorkout.currentExerciseIndex = index;
         this.renderWorkout();
+    }
+
+    // ПРОПУСК ПОДХОДА - триггерит антинаграду
+    skipSet(index) {
+        if (!this.currentWorkout) return;
+        
+        const exercise = this.currentWorkout.exercises[index];
+        if (this.currentWorkout.completedSets[index] >= exercise.sets) return;
+        
+        // Записываем пропуск
+        if (!this.currentWorkout.skippedSets) this.currentWorkout.skippedSets = [];
+        this.currentWorkout.skippedSets.push({
+            exerciseId: exercise.id,
+            exerciseName: exercise.name,
+            setNumber: this.currentWorkout.completedSets[index] + 1,
+            timestamp: Date.now()
+        });
+        
+        // Обновляем статистику
+        const stats = this.getStats();
+        stats.skippedSets = (stats.skippedSets || 0) + 1;
+        this.saveStats(stats);
+        
+        // Помечаем подход как выполненный (но без объёма)
+        this.currentWorkout.completedSets[index]++;
+        
+        // Показываем уведомление
+        this.toast('Подход пропущен 😒', 'warning');
+        
+        // Проверяем антинаграды
+        this.checkShameAchievements(stats);
+        
+        // Переход к следующему упражнению если все подходы сделаны
+        if (this.currentWorkout.completedSets[index] >= exercise.sets) {
+            if (index < this.currentWorkout.exercises.length - 1) {
+                this.currentWorkout.currentExerciseIndex = index + 1;
+            } else {
+                this.completeWorkout();
+                return;
+            }
+        }
+        
+        this.renderWorkout();
+    }
+    
+    // ЗАМЕНА УПРАЖНЕНИЯ
+    openReplaceModal(index) {
+        if (!this.currentWorkout) return;
+        
+        const exercise = this.currentWorkout.exercises[index];
+        const modal = document.getElementById('replaceModal');
+        const list = document.getElementById('replaceExercisesList');
+        
+        // Определяем категорию упражнения
+        let category = null;
+        for (const [cat, exercises] of Object.entries(CONFIG.EXERCISES)) {
+            if (Array.isArray(exercises) && exercises.some(e => e.id === exercise.id)) {
+                category = cat;
+                break;
+            }
+        }
+        
+        if (!category) {
+            this.toast('Невозможно заменить это упражнение', 'error');
+            return;
+        }
+        
+        // Получаем альтернативные упражнения из той же категории
+        const alternatives = CONFIG.EXERCISES[category].filter(e => e.id !== exercise.id);
+        
+        if (alternatives.length === 0) {
+            this.toast('Нет альтернативных упражнений', 'error');
+            return;
+        }
+        
+        list.innerHTML = alternatives.map(alt => `
+            <div class="replace-exercise-item" data-exercise-id="${alt.id}">
+                <div class="replace-exercise-icon">${icon(alt.icon, 'lg')}</div>
+                <div class="replace-exercise-info">
+                    <div class="replace-exercise-name">${alt.name}</div>
+                    <div class="replace-exercise-meta">${alt.sets} × ${alt.reps}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Добавляем обработчики
+        list.querySelectorAll('.replace-exercise-item').forEach(item => {
+            item.onclick = () => {
+                const newExerciseId = item.dataset.exerciseId;
+                this.replaceExercise(index, newExerciseId);
+                modal.classList.remove('active');
+            };
+        });
+        
+        this.replacingExerciseIndex = index;
+        modal.classList.add('active');
+    }
+    
+    closeReplaceModal() {
+        document.getElementById('replaceModal').classList.remove('active');
+    }
+    
+    replaceExercise(index, newExerciseId) {
+        if (!this.currentWorkout) return;
+        
+        // Находим новое упражнение
+        let newExercise = null;
+        for (const [cat, exercises] of Object.entries(CONFIG.EXERCISES)) {
+            if (Array.isArray(exercises)) {
+                newExercise = exercises.find(e => e.id === newExerciseId);
+                if (newExercise) break;
+            }
+        }
+        
+        if (!newExercise) return;
+        
+        // Сохраняем старое название для истории
+        const oldExercise = this.currentWorkout.exercises[index];
+        
+        // Записываем замену
+        if (!this.currentWorkout.replacements) this.currentWorkout.replacements = [];
+        this.currentWorkout.replacements.push({
+            oldExercise: oldExercise.name,
+            newExercise: newExercise.name,
+            timestamp: Date.now()
+        });
+        
+        // Обновляем статистику
+        const stats = this.getStats();
+        stats.exerciseReplacements = (stats.exerciseReplacements || 0) + 1;
+        this.saveStats(stats);
+        
+        // Заменяем упражнение
+        this.currentWorkout.exercises[index] = {...newExercise};
+        this.currentWorkout.exerciseWeights[index] = this.getExerciseWeight(newExercise.id);
+        
+        // Сбрасываем подходы для нового упражнения
+        this.currentWorkout.completedSets[index] = 0;
+        
+        this.toast(`Заменено на: ${newExercise.name}`);
+        
+        // Проверяем антинаграды
+        this.checkShameAchievements(stats);
+        
+        this.renderWorkout();
+    }
+    
+    // СИСТЕМА АНТИНАГРАД
+    checkShameAchievements(stats) {
+        const earned = stats.shameAchievements || [];
+        let newShame = null;
+        
+        Object.values(CONFIG.SHAME_ACHIEVEMENTS).forEach(a => {
+            if (!earned.includes(a.id) && a.condition(stats)) {
+                earned.push(a.id);
+                newShame = a;
+            }
+        });
+        
+        stats.shameAchievements = earned;
+        this.saveStats(stats);
+        
+        if (newShame) {
+            this.showShameAchievement(newShame);
+        }
+    }
+    
+    showShameAchievement(shame) {
+        const popup = document.getElementById('shamePopup');
+        const iconEl = document.getElementById('shamePopupIcon');
+        const titleEl = document.getElementById('shamePopupTitle');
+        const messageEl = document.getElementById('shamePopupMessage');
+        
+        iconEl.textContent = '😭';
+        titleEl.textContent = shame.name;
+        messageEl.textContent = shame.message;
+        
+        popup.classList.add('active');
+        
+        // Вибрация
+        this.vibrate([300, 100, 300]);
+        
+        document.getElementById('btnShameClose').onclick = () => {
+            popup.classList.remove('active');
+        };
     }
 
     adjustWeight(index, delta) {
@@ -3852,13 +4612,54 @@ class FitProApp {
         
         const weight = this.currentWorkout.exerciseWeights[index];
         const repsStr = exercise.reps.toString();
-        // Извлекаем число из строки типа "8-10", "30", "15 на каждую", "45-60 сек"
-        const reps = parseInt(repsStr.match(/\d+/)?.[0]) || 10;
         
-        // Для упражнений с собственным весом не добавляем к объёму (или добавляем условно)
-        // Объём = вес × повторения, но только для упражнений со снарядами
-        if (!exercise.bodyweight && weight > 0) {
+        // Улучшенное извлечение повторений из строки
+        // "8-10" -> берём среднее (9)
+        // "15 на каждую" -> 15 × 2 = 30
+        // "45-60 сек" -> 0 (это упражнение на время, не считаем объём)
+        // "20 вперёд + 20 назад" -> 40
+        let reps = 0;
+        
+        if (repsStr.includes('сек')) {
+            // Упражнение на время - не считаем объём
+            reps = 0;
+        } else if (repsStr.includes('на каждую') || repsStr.includes('каждую ногу')) {
+            // "15 на каждую" - умножаем на 2
+            const match = repsStr.match(/(\d+)/);
+            reps = match ? parseInt(match[1]) * 2 : 10;
+        } else if (repsStr.includes('+')) {
+            // "20 вперёд + 20 назад" - суммируем все числа
+            const matches = repsStr.match(/\d+/g);
+            reps = matches ? matches.reduce((sum, n) => sum + parseInt(n), 0) : 10;
+        } else if (repsStr.includes('-')) {
+            // "8-10" - берём среднее
+            const matches = repsStr.match(/(\d+)-(\d+)/);
+            if (matches) {
+                reps = Math.round((parseInt(matches[1]) + parseInt(matches[2])) / 2);
+            } else {
+                reps = parseInt(repsStr.match(/\d+/)?.[0]) || 10;
+            }
+        } else {
+            // Простое число "12"
+            reps = parseInt(repsStr.match(/\d+/)?.[0]) || 10;
+        }
+        
+        // Расчёт объёма:
+        // - Для упражнений со снарядами: вес × повторения
+        // - Для bodyweight с собственным весом: считаем условно (вес тела × повторения × 0.65 - коэф. нагрузки)
+        // - Для разминочных упражнений без веса: не считаем
+        if (!exercise.bodyweight && weight > 0 && reps > 0) {
+            // Обычное упражнение со снарядами
             this.currentWorkout.totalVolume += weight * reps;
+        } else if (exercise.bodyweight && reps > 0) {
+            // Упражнения с собственным весом - считаем ~65% веса тела как нагрузку
+            // (отжимания, подтягивания, брусья и т.д.)
+            const bodyWeight = this.getBodyWeight();
+            const effectiveWeight = Math.round(bodyWeight * 0.65);
+            // Только для силовых bodyweight (не разминочных)
+            if (!exercise.id.startsWith('warmup_')) {
+                this.currentWorkout.totalVolume += effectiveWeight * reps;
+            }
         }
         
         // Не сохраняем вес для bodyweight упражнений
@@ -4488,7 +5289,14 @@ class FitProApp {
     }
 
     finishWorkoutEarly() {
-        if (confirm('Завершить тренировку досрочно?')) this.completeWorkout();
+        if (confirm('Завершить тренировку досрочно?')) {
+            // Увеличиваем счётчик досрочных завершений для антинаград
+            const stats = this.getStats();
+            stats.earlyQuits = (stats.earlyQuits || 0) + 1;
+            this.saveStats(stats);
+            this.checkShameAchievements(stats);
+            this.completeWorkout();
+        }
     }
 
     confirmExitWorkout() {
@@ -4632,6 +5440,122 @@ class FitProApp {
         document.getElementById('settingsNameValue').textContent = this.getDisplayName();
         document.getElementById('settingsBodyWeightValue').textContent = this.getBodyWeight() + ' кг';
         document.getElementById('settingsRestValue').textContent = this.getRestTime() + ' сек';
+        
+        // Обновляем информацию об аватаре
+        const savedAvatar = this.getSelectedAvatar();
+        const avatarValueEl = document.getElementById('settingsAvatarValue');
+        if (avatarValueEl) {
+            avatarValueEl.textContent = savedAvatar ? 'Выбран' : 'Не выбран';
+        }
+    }
+    
+    // ============ ВЫБОР ПЕРСОНАЖА ============
+    getSelectedCharacter() {
+        return localStorage.getItem(`fitpro_character_${this.currentUser}`) || 'nikolay';
+    }
+    
+    // Получить текущий уровень персонажа на основе тренировок
+    // Возвращает уровень с учётом maxLevels персонажа
+    getCharacterLevel(maxLevels = 4) {
+        const stats = this.getStats();
+        const totalWorkouts = stats.total || 0;
+        
+        if (maxLevels === 4) {
+            // Пороги для 4 уровней: 0, 20, 50, 100
+            if (totalWorkouts >= 100) return 4;
+            if (totalWorkouts >= 50) return 3;
+            if (totalWorkouts >= 20) return 2;
+            return 1;
+        } else {
+            // Пороги для 3 уровней: 0, 30, 80
+            if (totalWorkouts >= 80) return 3;
+            if (totalWorkouts >= 30) return 2;
+            return 1;
+        }
+    }
+    
+    // Получить уровень для конкретного персонажа
+    getCharacterLevelFor(characterId) {
+        const char = CONFIG.CHARACTERS[characterId];
+        const maxLevels = char?.levels || 4;
+        return this.getCharacterLevel(maxLevels);
+    }
+    
+    openAvatarModal() {
+        const modal = document.getElementById('avatarModal');
+        const grid = document.getElementById('avatarGrid');
+        
+        const currentCharacter = this.getSelectedCharacter();
+        this.selectedCharacterId = currentCharacter; // Устанавливаем текущего персонажа
+        const levelNames4 = ['', 'Новичок', 'Любитель', 'Спортсмен', 'Атлет'];
+        const levelNames3 = ['', 'Новичок', 'Продвинутый', 'Мастер'];
+        
+        // Показываем всех персонажей на их текущем уровне
+        const characters = Object.values(CONFIG.CHARACTERS);
+        
+        grid.innerHTML = characters.map(char => {
+            const maxLevels = char.levels || 4;
+            const charLevel = this.getCharacterLevel(maxLevels);
+            const levelNames = maxLevels === 4 ? levelNames4 : levelNames3;
+            
+            return `
+                <div class="avatar-option ${char.id === currentCharacter ? 'selected' : ''}" data-character-id="${char.id}">
+                    <img src="${char.baseSrc}_${charLevel}.png" alt="${char.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23334155%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2260%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23fff%22>👤</text></svg>'">
+                    <div class="avatar-option-name">${char.name}</div>
+                    <div class="avatar-option-level">Ур.${charLevel}/${maxLevels}: ${levelNames[charLevel]}</div>
+                </div>
+            `;
+        }).join('');
+        
+        // Обработчики выбора
+        grid.querySelectorAll('.avatar-option').forEach(option => {
+            option.onclick = () => {
+                grid.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                this.selectedCharacterId = option.dataset.characterId;
+            };
+        });
+        
+        modal.classList.add('active');
+    }
+    
+    closeAvatarModal() {
+        const modal = document.getElementById('avatarModal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+    }
+    
+    saveAvatar() {
+        if (this.selectedCharacterId) {
+            localStorage.setItem(`fitpro_character_${this.currentUser}`, this.selectedCharacterId);
+            this.toast('Персонаж выбран!');
+            
+            // Обновляем аватар на главном экране
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                headerAvatar.src = this.getAvatarSrc();
+            }
+            
+            // Обновляем экраны
+            this.updateHomeScreen();
+            this.updateSettingsScreen();
+            this.updateCharacterLevel();
+        }
+        // Закрываем окно
+        const modal = document.getElementById('avatarModal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+    }
+    
+    // Получить src текущего аватара (персонаж + уровень с учётом maxLevels)
+    getAvatarSrc() {
+        const characterId = this.getSelectedCharacter();
+        const char = CONFIG.CHARACTERS[characterId];
+        const maxLevels = char?.levels || 4;
+        const level = this.getCharacterLevel(maxLevels);
+        return `${characterId}_${level}.png`;
     }
 
     openModal(id) {
@@ -4754,11 +5678,15 @@ class FitProApp {
     renderAchievements() {
         const stats = this.getStats();
         const earned = stats.achievements || [];
+        const shameEarned = stats.shameAchievements || [];
         const user = CONFIG.USERS[this.currentUser];
         
         // Обновляем сводку
         const total = Object.keys(CONFIG.ACHIEVEMENTS).length;
         const earnedCount = earned.length;
+        const shameTotal = Object.keys(CONFIG.SHAME_ACHIEVEMENTS).length;
+        const shameCount = shameEarned.length;
+        
         document.getElementById('achievementsSummary').innerHTML = `
             <div class="achievements-progress">
                 <div class="progress-circle" style="--progress: ${earnedCount / total * 100}%; --color: ${user.color}">
@@ -4770,11 +5698,27 @@ class FitProApp {
                     ${earnedCount === total ? `<span class="badge-complete">${icon('star', 'sm')} Все достижения!</span>` : ''}
                 </div>
             </div>
+            ${shameCount > 0 ? `
+            <div class="shame-progress" style="margin-top: 15px; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 24px;">💩</span>
+                    <div>
+                        <h4 style="color: #EF4444; margin: 0;">Антинаграды: ${shameCount}</h4>
+                        <p style="color: #9CA3AF; font-size: 12px; margin: 0;">Медали позора видны всем!</p>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
         `;
         
         // Рендерим все достижения
         const grid = document.getElementById('achievementsGrid');
         grid.innerHTML = '';
+        
+        // Сначала обычные достижения
+        const achievementsSection = document.createElement('div');
+        achievementsSection.innerHTML = '<h3 style="color: white; margin: 15px 0 10px; font-size: 16px;">🏆 Достижения</h3>';
+        grid.appendChild(achievementsSection);
         
         Object.values(CONFIG.ACHIEVEMENTS).forEach(a => {
             const isEarned = earned.includes(a.id);
@@ -4789,6 +5733,28 @@ class FitProApp {
                     <p>${a.desc}</p>
                 </div>
                 ${isEarned ? `<div class="achievement-check">${icon('checkCircle', 'md')}</div>` : `<div class="achievement-lock">${icon('lock', 'sm')}</div>`}
+            `;
+            grid.appendChild(card);
+        });
+        
+        // Затем антинаграды
+        const shameSection = document.createElement('div');
+        shameSection.innerHTML = '<h3 style="color: #EF4444; margin: 25px 0 10px; font-size: 16px;">💩 Антинаграды (медали позора)</h3>';
+        grid.appendChild(shameSection);
+        
+        Object.values(CONFIG.SHAME_ACHIEVEMENTS).forEach(a => {
+            const isEarned = shameEarned.includes(a.id);
+            const card = document.createElement('div');
+            card.className = `achievement-card shame-achievement ${isEarned ? 'earned shame-earned' : 'locked'}`;
+            card.innerHTML = `
+                <div class="achievement-icon-wrapper" style="${isEarned ? 'background: linear-gradient(135deg, #EF4444, #991B1B)' : ''}">
+                    <span style="font-size: 28px;">${a.icon}</span>
+                </div>
+                <div class="achievement-info">
+                    <h4 style="${isEarned ? 'color: #EF4444;' : ''}">${a.name}</h4>
+                    <p>${a.desc}</p>
+                </div>
+                ${isEarned ? `<div class="achievement-check" style="color: #EF4444;">${icon('alert', 'md')}</div>` : `<div class="achievement-lock">${icon('lock', 'sm')}</div>`}
             `;
             grid.appendChild(card);
         });
@@ -4830,18 +5796,60 @@ class FitProApp {
 
     checkStreak() {
         const stats = this.getStats();
-        const today = this.formatDate(new Date());
-        const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-        if (stats.lastWorkoutDate && stats.lastWorkoutDate !== today && stats.lastWorkoutDate !== this.formatDate(yesterday)) {
-            stats.streak = 0;
-            this.saveStats(stats);
+        const today = new Date();
+        const todayStr = this.formatDate(today);
+        const yesterday = new Date(); 
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        // Проверяем, был ли пропущен понедельник
+        if (today.getDay() !== 1) { // Если сегодня не понедельник
+            // Находим последний понедельник
+            const lastMonday = new Date();
+            const daysSinceMonday = (today.getDay() + 6) % 7; // 0=Вс, 1=Пн...
+            lastMonday.setDate(today.getDate() - daysSinceMonday);
+            const lastMondayStr = this.formatDate(lastMonday);
+            
+            // Если последняя тренировка была до понедельника, значит понедельник пропущен
+            if (stats.lastWorkoutDate && stats.lastWorkoutDate < lastMondayStr && stats.lastMondayChecked !== lastMondayStr) {
+                stats.mondaySkips = (stats.mondaySkips || 0) + 1;
+                stats.lastMondayChecked = lastMondayStr;
+                this.checkShameAchievements(stats);
+            }
         }
+        
+        // Проверяем серию
+        if (stats.lastWorkoutDate && stats.lastWorkoutDate !== todayStr && stats.lastWorkoutDate !== this.formatDate(yesterday)) {
+            // Серия прервалась - проверяем антинаграду
+            if (stats.streak >= 7) {
+                stats.brokenStreaks = (stats.brokenStreaks || 0) + 1;
+                this.checkShameAchievements(stats);
+            }
+            stats.streak = 0;
+        }
+        
+        this.saveStats(stats);
     }
 
     getStats(userId) {
         const key = `fitpro_stats_${userId || this.currentUser}`;
         const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : { streak: 0, total: 0, volume: 0, achievements: [], lastWorkoutDate: null };
+        const defaults = { 
+            streak: 0, 
+            total: 0, 
+            volume: 0, 
+            achievements: [], 
+            shameAchievements: [],
+            lastWorkoutDate: null,
+            skippedSets: 0,
+            exerciseReplacements: 0,
+            earlyQuits: 0,
+            zeroVolumeWorkouts: 0,
+            timerFails: 0,
+            mondaySkips: 0,
+            brokenStreaks: 0
+        };
+        if (!data) return defaults;
+        return { ...defaults, ...JSON.parse(data) };
     }
 
     saveStats(stats) { localStorage.setItem(`fitpro_stats_${this.currentUser}`, JSON.stringify(stats)); }

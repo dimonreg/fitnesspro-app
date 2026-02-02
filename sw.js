@@ -3,7 +3,7 @@
 //                             FitPro v2.0
 // ============================================================================
 
-const CACHE_NAME = 'fitpro-v2.0.0';
+const CACHE_NAME = 'fitpro-v2.1.0';
 const urlsToCache = [
     './',
     './index.html',
