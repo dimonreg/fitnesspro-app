@@ -3238,6 +3238,11 @@ class FitProApp {
             const img = document.createElement('img');
             img.src = `${characterBase}_${i + 1}.png`;
             img.alt = levelNames[i];
+            // Если картинка не загрузилась - показываем placeholder
+            img.onerror = function() {
+                this.style.display = 'none';
+                stage.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#10B981,#059669);border-radius:50%;color:white;font-weight:bold;font-size:12px;">Ур.${i+1}</div>`;
+            };
             stage.appendChild(img);
             
             if (i <= currentLevel) {
