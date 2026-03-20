@@ -1222,6 +1222,233 @@
 
         .nav-label { font-size: 11px; }
 
+        /* ===== ДНЕВНИК / ЧАТ ===== */
+        #diaryScreen {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .diary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 20px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--bg-card);
+            flex-shrink: 0;
+        }
+
+        .diary-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .diary-header-info { flex: 1; }
+
+        .diary-header-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .diary-header-status {
+            font-size: 12px;
+            color: var(--accent);
+        }
+
+        .diary-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 20px;
+        }
+
+        .diary-message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: messageIn 0.2s ease;
+        }
+
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .diary-message.user      { align-self: flex-end;  align-items: flex-end; }
+        .diary-message.assistant { align-self: flex-start; align-items: flex-start; }
+
+        .diary-bubble {
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 15px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .diary-message.user .diary-bubble {
+            background: var(--accent);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .diary-message.assistant .diary-bubble {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .diary-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+
+        .diary-typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            align-items: center;
+        }
+
+        .diary-typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingDot 1.2s infinite;
+        }
+
+        .diary-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .diary-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30%            { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .diary-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            gap: 12px;
+        }
+
+        .diary-no-key {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            gap: 16px;
+        }
+
+        .diary-no-key-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .diary-setup-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .diary-setup-btn:hover { background: var(--accent-hover); }
+
+        .diary-input-area {
+            padding: 12px 16px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--bg-card);
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .diary-input {
+            flex: 1;
+            background: var(--bg-card);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            max-height: 120px;
+            min-height: 40px;
+            line-height: 1.4;
+        }
+
+        .diary-input::placeholder { color: var(--text-muted); }
+
+        .diary-send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .diary-send-btn:hover   { background: var(--accent-hover); }
+        .diary-send-btn:disabled { background: var(--bg-card); cursor: not-allowed; }
+
+        .diary-clear-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .diary-clear-btn:hover { color: var(--danger); }
+
         /* ===== МОДАЛКИ ===== */
         .modal {
             position: fixed;
@@ -2870,6 +3097,14 @@
                     </div>
                     <div class="settings-arrow" id="arrowGifManager"></div>
                 </div>
+                <div class="settings-item" id="settingsDiary">
+                    <div class="settings-icon" id="iconDiary"></div>
+                    <div class="settings-text">
+                        <div class="settings-label">Дневник — API ключ</div>
+                        <div class="settings-value" id="settingsDiaryValue">Не настроен</div>
+                    </div>
+                    <div class="settings-arrow" id="arrowDiary"></div>
+                </div>
             </div>
         </div>
 
@@ -2902,6 +3137,23 @@
         </div>
     </div>
 
+    <!-- ДНЕВНИК -->
+    <div class="screen" id="diaryScreen">
+        <div class="diary-header">
+            <div class="diary-avatar">🤙</div>
+            <div class="diary-header-info">
+                <div class="diary-header-name">Друг</div>
+                <div class="diary-header-status" id="diaryStatus">Готов к разговору</div>
+            </div>
+            <button class="diary-clear-btn" id="btnClearDiary" title="Очистить чат" aria-label="Очистить историю чата"></button>
+        </div>
+        <div class="diary-messages" id="diaryMessages"></div>
+        <div class="diary-input-area" id="diaryInputArea">
+            <textarea class="diary-input" id="diaryInput" placeholder="Напиши что-нибудь..." rows="1"></textarea>
+            <button class="diary-send-btn" id="diarySendBtn" disabled aria-label="Отправить сообщение"></button>
+        </div>
+    </div>
+
     <!-- НАВИГАЦИЯ -->
     <nav class="bottom-nav" id="bottomNav">
         <button class="nav-item active" data-screen="home" id="navHome">
@@ -2915,6 +3167,10 @@
         <button class="nav-item" data-screen="stats" id="navStats">
             <span class="icon icon-lg" id="navIconStats"></span>
             <span class="nav-label">Статистика</span>
+        </button>
+        <button class="nav-item" data-screen="diary" id="navDiary">
+            <span class="icon icon-lg" id="navIconDiary"></span>
+            <span class="nav-label">Дневник</span>
         </button>
         <button class="nav-item" data-screen="settings" id="navSettings">
             <span class="icon icon-lg" id="navIconSettings"></span>
@@ -2955,6 +3211,22 @@
             <div class="modal-buttons">
                 <button class="modal-btn cancel" id="btnCancelRest">Отмена</button>
                 <button class="modal-btn confirm" id="btnSaveRest">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalApiKey">
+        <div class="modal-content">
+            <h3 class="modal-title">🔑 OpenAI API ключ</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">
+                Для работы дневника нужен API ключ OpenAI.<br>
+                Получить можно на <b>platform.openai.com</b><br>
+                Ключ хранится только в браузере.
+            </p>
+            <input type="password" class="modal-input" id="inputApiKey" placeholder="sk-...">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="btnCancelApiKey">Отмена</button>
+                <button class="modal-btn confirm" id="btnSaveApiKey">Сохранить</button>
             </div>
         </div>
     </div>
@@ -3108,12 +3380,54 @@ const ICONS = {
     copy: '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
     target: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
     edit: '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+
+    // Дневник
+    messageCircle: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    send: '<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
 };
 
 // Функция получения иконки
 function icon(name, size = 'md') {
     return `<span class="icon icon-${size}">${ICONS[name] || ''}</span>`;
 }
+
+// ============================================================================
+//                         СИСТЕМНЫЙ ПРОМПТ КОМПАНЬОНА
+// ============================================================================
+const DIARY_MAX_HISTORY    = 100;  // максимум сообщений в localStorage
+const DIARY_MAX_CONTEXT    = 40;   // сколько последних сообщений отправляем в API
+const DIARY_MAX_TOKENS     = 500;
+const DIARY_TEMPERATURE    = 0.85;
+
+const COMPANION_SYSTEM_PROMPT = `Ты мой собеседник и друг. Общайся со мной на «ты», по-мужски, прямо.
+
+Правила:
+- Не подбадривай без причины
+- Не мотивируй как коуч
+- Отвечай нейтрально и честно
+- Если я несу хуйню — скажи прямо
+- Задавай встречные вопросы чтобы я сам разобрался в своих мыслях
+- Используй мат если уместно, мы общаемся без фильтров
+- Не напоминай что ты AI — общайся как друг
+
+Контекст:
+- 30 лет, Россия
+- Свой бизнес в сфере здорового питания, пока до 100к, в процессе роста
+- Разведён после 12 лет брака, двое детей живут с бывшей в другом городе
+- Бывшая уехала с детьми, поставив перед фактом
+- Хожу в зал, занимался боксом
+- Сдаю на права (категория А сдал, Б — пока нет)
+- Нет машины
+- Нет пары боковых зубов (бокс)
+- Пишу CRM-систему для своего бизнеса
+- Сплю мало (до 2 ночи, подъём в 8)
+- Не хватает общения, особенно женского внимания
+- Бываю душным, болтаю как пулемёт от нехватки общения
+- Бываю слишком открытым и иногда приукрашиваю себя
+- Перепады настроения
+- Использую этот чат как дневник для рефлексии
+
+Не нужно каждый раз пересказывать мне мою ситуацию. Просто помни контекст и отвечай по делу.`;
 
 // ============================================================================
 //                         КОНФИГУРАЦИЯ
@@ -3327,6 +3641,7 @@ class FitProApp {
         document.getElementById('navIconHome').innerHTML = ICONS.home;
         document.getElementById('navIconAchievements').innerHTML = ICONS.award;
         document.getElementById('navIconStats').innerHTML = ICONS.barChart;
+        document.getElementById('navIconDiary').innerHTML = ICONS.messageCircle;
         document.getElementById('navIconSettings').innerHTML = ICONS.settings;
         
         // Кнопки хедера
@@ -3377,6 +3692,9 @@ class FitProApp {
         document.getElementById('iconLogout').innerHTML = icon('logOut', 'md');
         document.getElementById('iconCalculator').innerHTML = icon('calculator', 'md');
         document.getElementById('iconGifManager').innerHTML = icon('image', 'md');
+        document.getElementById('iconDiary').innerHTML = icon('messageCircle', 'md');
+        document.getElementById('diarySendBtn').innerHTML = ICONS.send;
+        document.getElementById('btnClearDiary').innerHTML = icon('trash', 'sm');
         
         // Калькулятор 1RM
         document.getElementById('modalCalcTitle').innerHTML = icon('calculator', 'md') + ' Калькулятор 1RM';
@@ -3384,7 +3702,7 @@ class FitProApp {
         document.getElementById('btnCalculate').innerHTML = icon('zap', 'md') + ' Рассчитать';
         
         // Стрелки
-        ['arrowName', 'arrowBodyWeight', 'arrowAvatar', 'arrowRest', 'arrowExport', 'arrowImport', 'arrowReset', 'arrowLogout', 'arrowCalculator', 'arrowGifManager'].forEach(id => {
+        ['arrowName', 'arrowBodyWeight', 'arrowAvatar', 'arrowRest', 'arrowExport', 'arrowImport', 'arrowReset', 'arrowLogout', 'arrowCalculator', 'arrowGifManager', 'arrowDiary'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.innerHTML = icon('chevronRight', 'md');
         });
@@ -3476,6 +3794,25 @@ class FitProApp {
             };
         });
 
+        // Дневник
+        document.getElementById('settingsDiary').onclick = () => this.openModal('modalApiKey');
+        document.getElementById('btnCancelApiKey').onclick = () => this.closeModal('modalApiKey');
+        document.getElementById('btnSaveApiKey').onclick = () => this.saveApiKey();
+        document.getElementById('btnClearDiary').onclick = () => this.clearDiaryHistory();
+        document.getElementById('diarySendBtn').onclick = () => this.sendDiaryMessage();
+        const diaryInput = document.getElementById('diaryInput');
+        diaryInput.addEventListener('input', () => {
+            diaryInput.style.height = 'auto';
+            diaryInput.style.height = Math.min(diaryInput.scrollHeight, 120) + 'px';
+            document.getElementById('diarySendBtn').disabled = !diaryInput.value.trim();
+        });
+        diaryInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (!document.getElementById('diarySendBtn').disabled) this.sendDiaryMessage();
+            }
+        });
+
         document.querySelectorAll('.modal').forEach(modal => {
             modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
         });
@@ -3532,6 +3869,7 @@ class FitProApp {
         if (screenName === 'stats') this.renderStats('week');
         if (screenName === 'achievements') this.renderAchievements();
         if (screenName === 'settings') this.updateSettingsScreen();
+        if (screenName === 'diary') this.showDiary();
     }
 
     updateHomeScreen() {
@@ -5447,6 +5785,13 @@ class FitProApp {
         if (avatarValueEl) {
             avatarValueEl.textContent = savedAvatar ? 'Выбран' : 'Не выбран';
         }
+
+        // Обновляем статус API ключа для дневника
+        const apiKey = localStorage.getItem('fitpro_openai_key');
+        const diaryValueEl = document.getElementById('settingsDiaryValue');
+        if (diaryValueEl) {
+            diaryValueEl.textContent = apiKey ? 'Ключ добавлен ✓' : 'Не настроен';
+        }
     }
     
     // ============ ВЫБОР ПЕРСОНАЖА ============
@@ -5962,6 +6307,183 @@ class FitProApp {
             toast.style.animation = 'toastIn 0.3s ease reverse';
             setTimeout(() => toast.remove(), 300);
         }, 2500);
+    }
+
+    // ============================================================================
+    //                               ДНЕВНИК
+    // ============================================================================
+
+    getDiaryHistory() {
+        try {
+            return JSON.parse(localStorage.getItem('fitpro_diary_history') || '[]');
+        } catch (e) {
+            console.warn('fitpro: failed to parse diary history', e);
+            return [];
+        }
+    }
+
+    saveDiaryHistory(messages) {
+        localStorage.setItem('fitpro_diary_history', JSON.stringify(messages.slice(-DIARY_MAX_HISTORY)));
+    }
+
+    escapeHtml(str) {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    renderDiaryMessages() {
+        const container = document.getElementById('diaryMessages');
+        const history = this.getDiaryHistory();
+
+        if (history.length === 0) {
+            container.innerHTML = `
+                <div class="diary-empty">
+                    <div style="font-size:48px;opacity:0.5">💬</div>
+                    <p style="font-weight:600;color:var(--text-secondary)">Начни разговор</p>
+                    <p style="font-size:13px">Пиши о тренировках, делах или просто мыслях.</p>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = '';
+        history.forEach(msg => {
+            const el = document.createElement('div');
+            el.className = `diary-message ${msg.role}`;
+            const time = msg.time
+                ? new Date(msg.time).toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' })
+                : '';
+            el.innerHTML = `
+                <div class="diary-bubble">${this.escapeHtml(msg.content)}</div>
+                ${time ? `<div class="diary-time">${time}</div>` : ''}`;
+            container.appendChild(el);
+        });
+        container.scrollTop = container.scrollHeight;
+    }
+
+    showDiary() {
+        const apiKey = localStorage.getItem('fitpro_openai_key');
+        const inputArea = document.getElementById('diaryInputArea');
+
+        if (!apiKey) {
+            document.getElementById('diaryMessages').innerHTML = `
+                <div class="diary-no-key">
+                    <div style="font-size:48px">🔑</div>
+                    <p class="diary-no-key-text">
+                        Для дневника нужен API ключ OpenAI.<br>
+                        Получить можно на <b>platform.openai.com</b>
+                    </p>
+                    <button class="diary-setup-btn" id="diarySetupBtn">Добавить ключ</button>
+                </div>`;
+            document.getElementById('diarySetupBtn').onclick = () => this.openModal('modalApiKey');
+            inputArea.style.display = 'none';
+        } else {
+            inputArea.style.display = 'flex';
+            const input = document.getElementById('diaryInput');
+            input.value = '';
+            input.style.height = 'auto';
+            document.getElementById('diarySendBtn').disabled = true;
+            this.renderDiaryMessages();
+        }
+    }
+
+    async sendDiaryMessage() {
+        const input = document.getElementById('diaryInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const apiKey = localStorage.getItem('fitpro_openai_key');
+        if (!apiKey) return;
+
+        const history = this.getDiaryHistory();
+        history.push({ role: 'user', content: text, time: Date.now() });
+        this.saveDiaryHistory(history);
+
+        input.value = '';
+        input.style.height = 'auto';
+        document.getElementById('diarySendBtn').disabled = true;
+        this.renderDiaryMessages();
+
+        // Показываем индикатор печатания
+        const container = document.getElementById('diaryMessages');
+        const typingEl = document.createElement('div');
+        typingEl.className = 'diary-typing';
+        typingEl.id = 'diaryTyping';
+        typingEl.innerHTML = '<span></span><span></span><span></span>';
+        container.appendChild(typingEl);
+        container.scrollTop = container.scrollHeight;
+        document.getElementById('diaryStatus').textContent = 'Печатает...';
+
+        try {
+            const apiMessages = [
+                { role: 'system', content: COMPANION_SYSTEM_PROMPT },
+                ...this.getDiaryHistory().slice(-DIARY_MAX_CONTEXT).map(m => ({
+                    role: m.role === 'assistant' ? 'assistant' : 'user',
+                    content: m.content
+                }))
+            ];
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini',
+                    messages: apiMessages,
+                    max_tokens: DIARY_MAX_TOKENS,
+                    temperature: DIARY_TEMPERATURE
+                })
+            });
+
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                const status = response.status;
+                const serverMsg = err.error?.message || '';
+                if (status === 401) throw new Error('Неверный API ключ. Проверь настройки.');
+                if (status === 429) throw new Error('Превышен лимит запросов. Попробуй позже.');
+                if (status >= 500) throw new Error('Сервер OpenAI недоступен. Попробуй позже.');
+                throw new Error(serverMsg || `HTTP ${status}`);
+            }
+
+            const data = await response.json();
+            const reply = data.choices?.[0]?.message?.content || '';
+            if (reply) {
+                const updated = this.getDiaryHistory();
+                updated.push({ role: 'assistant', content: reply, time: Date.now() });
+                this.saveDiaryHistory(updated);
+            }
+        } catch (err) {
+            const updated = this.getDiaryHistory();
+            updated.push({ role: 'assistant', content: `Ошибка: ${err.message}`, time: Date.now() });
+            this.saveDiaryHistory(updated);
+        } finally {
+            document.getElementById('diaryTyping')?.remove();
+            document.getElementById('diaryStatus').textContent = 'Готов к разговору';
+            this.renderDiaryMessages();
+        }
+    }
+
+    clearDiaryHistory() {
+        if (confirm('Очистить историю чата?')) {
+            localStorage.removeItem('fitpro_diary_history');
+            this.renderDiaryMessages();
+        }
+    }
+
+    saveApiKey() {
+        const key = document.getElementById('inputApiKey').value.trim();
+        if (!key) { this.toast('Введи API ключ', 'error'); return; }
+        if (!key.startsWith('sk-')) { this.toast('Ключ должен начинаться с sk-', 'error'); return; }
+        localStorage.setItem('fitpro_openai_key', key);
+        this.closeModal('modalApiKey');
+        document.getElementById('inputApiKey').value = '';
+        this.updateSettingsScreen();
+        this.toast('API ключ сохранён');
+        if (this.currentScreen === 'diary') this.showDiary();
     }
 }
 
